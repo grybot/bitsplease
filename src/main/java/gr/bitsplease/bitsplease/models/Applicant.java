@@ -15,7 +15,7 @@ import java.util.List;
 public class Applicant {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private double ApplicantId;
+    private int ApplicantId;
     private String firstName;
     private String lastName;
     private String email;
@@ -23,6 +23,10 @@ public class Applicant {
     private String level;
     private String address;
     private String region;
+
+
+
+
 
     @OneToMany(mappedBy = "applicant")
     @JsonIgnore

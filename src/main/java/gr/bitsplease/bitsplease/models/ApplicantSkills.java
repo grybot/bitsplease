@@ -14,7 +14,7 @@ import java.util.List;
 public class ApplicantSkills {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private double id;
+    private int id;
     private String level;
 
     @ManyToOne

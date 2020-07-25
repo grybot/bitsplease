@@ -16,7 +16,7 @@ import java.util.List;
 public class Skills {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int skillId;
+    private int skillsId;
     private String name;
 
     @OneToMany(mappedBy = "skills")

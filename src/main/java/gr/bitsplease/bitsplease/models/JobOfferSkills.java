@@ -15,7 +15,7 @@ import java.util.List;
 public class JobOfferSkills {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private double id;
+    private int id;
 
     @ManyToOne
     private JobOffer jobOffer;

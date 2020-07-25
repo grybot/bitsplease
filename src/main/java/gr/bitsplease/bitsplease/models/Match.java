@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.UUID;
 
 @Data
@@ -22,8 +23,10 @@ public class Match {
     private double percentage;
     private boolean finalised;
 
+    @ManyToOne
     private Applicant applicant;
 
+    @ManyToOne
     private JobOffer jobOffer;
 
 }

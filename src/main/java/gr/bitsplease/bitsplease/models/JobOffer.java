@@ -1,6 +1,7 @@
 package gr.bitsplease.bitsplease.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,8 +24,10 @@ public class JobOffer {
     private boolean fulfilled;
 
     @OneToMany(mappedBy = "jobOffer")
+    @JsonIgnore
     private List<JobOfferSkills> jobOfferSkills;
 
     @OneToMany(mappedBy = "jobOffer")
+    @JsonIgnore
     private List<Match> matches;
 }

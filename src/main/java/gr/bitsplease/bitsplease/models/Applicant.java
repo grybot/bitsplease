@@ -1,5 +1,6 @@
 package gr.bitsplease.bitsplease.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +25,9 @@ public class Applicant {
     private String region;
 
     @OneToMany(mappedBy = "applicant")
+    @JsonIgnore
     private List<ApplicantSkills> applicantSkills;
-
     @OneToMany(mappedBy = "applicant")
+    @JsonIgnore
     private List<Match> matches;
 }

@@ -14,7 +14,7 @@ import java.util.List;
 public class Applicant {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private long ApplicantId;
+    private double ApplicantId;
     private String firstName;
     private String lastName;
     private String email;

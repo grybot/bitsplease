@@ -1,4 +1,7 @@
 package gr.bitsplease.bitsplease.repository;
 
-public class JobOfferRepository {
+import gr.bitsplease.bitsplease.models.JobOffer;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface JobOfferRepository extends JpaRepository<JobOffer, Integer> {
 }

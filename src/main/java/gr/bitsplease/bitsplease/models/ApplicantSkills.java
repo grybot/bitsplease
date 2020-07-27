@@ -15,6 +15,7 @@ public class ApplicantSkills {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable=false)
     private String level;
 
     @ManyToOne

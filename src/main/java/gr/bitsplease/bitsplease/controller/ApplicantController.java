@@ -31,5 +31,7 @@ public class ApplicantController {
 
     @GetMapping("applicant/{applicantId}")
     public Applicant getApplicantById(@PathVariable int applicantId)
-            throws ApplicantNotFoundException {return  applicantService.getApplicantById(applicantId);}
+            throws ApplicantNotFoundException {
+        return applicantService.getApplicantById(applicantId);
+    }
 }

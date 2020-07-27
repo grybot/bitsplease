@@ -18,6 +18,7 @@ public class Skills {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int skillsId;
+    @Column(nullable=false)
     private String name;
 
     @Override
@@ -26,11 +27,6 @@ public class Skills {
         if (o == null || getClass() != o.getClass()) return false;
         Skills skills = (Skills) o;
         return Objects.equals(name, skills.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 
     public Skills(String name) {

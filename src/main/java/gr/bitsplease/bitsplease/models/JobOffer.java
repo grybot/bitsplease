@@ -17,9 +17,13 @@ public class JobOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int jobOfferId;
+    @Column(nullable=false)
     private String companyName;
+    @Column(nullable=false)
     private String titleOfPosition;
+    @Column(nullable=false)
     private String edLevel;
+    @Column(nullable=false)
     private String region;
     private boolean fulfilled = false;
 

@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Helper {
     public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    static String[] HEADERS = {"First Name", "Last Name", "Address", "Region", "Education Level", "Level", "Skills", "Skills", "Skills"};
+  //  static String[] HEADERS = {"First Name", "Last Name", "Address", "Region", "Education Level", "Level", "Skills", "Skills", "Skills"};
 
     static String SHEET = "Applicants";
     static String SHEET1 = "Skills";
@@ -35,81 +35,78 @@ public class Helper {
 
     public static List<Applicant> excelToApplicants(InputStream is, List<Skills> skillsList) throws IOException {
 
-            Workbook workbook = new XSSFWorkbook(is);
+        Workbook workbook = new XSSFWorkbook(is);
 
-            Sheet sheet = workbook.getSheet(SHEET);
-            Iterator<Row> rows = sheet.iterator();
+        Sheet sheet = workbook.getSheet(SHEET);
+        Iterator<Row> rows = sheet.iterator();
 
-            List<Applicant> applicants = new ArrayList<Applicant>();
+        List<Applicant> applicants = new ArrayList<Applicant>();
 
-            int rowNumber = 0;
-            while (rows.hasNext()) {
-                Row currentRow = rows.next();
+        int rowNumber = 0;
+        while (rows.hasNext()) {
+            Row currentRow = rows.next();
 
-                // skip header
-                if (rowNumber == 0) {
-                    rowNumber++;
-                    continue;
-                }
-
-                Iterator<Cell> cellsInRow = currentRow.iterator();
-
-                Applicant applicant = new Applicant();
-                List<ApplicantSkills> applicantSkillsList = new ArrayList<>();
-                int cellIdx = 0;
-                while (cellsInRow.hasNext()) {
-                    Cell currentCell = cellsInRow.next();
-
-                    switch (cellIdx) {
-                        case 0:
-                            applicant.setFirstName((String) currentCell.getStringCellValue());
-                            break;
-
-                        case 1:
-                            applicant.setLastName(currentCell.getStringCellValue());
-                            break;
-
-                        case 2:
-                            applicant.setAddress(currentCell.getStringCellValue());
-                            break;
-
-                        case 3:
-                            applicant.setRegion(currentCell.getStringCellValue());
-                            break;
-
-                        case 4:
-                            applicant.setEdLevel(currentCell.getStringCellValue());
-                            break;
-
-                        case 5:
-                            applicant.setLevel(currentCell.getStringCellValue());
-                            break;
-
-                        default:
-                            ApplicantSkills ab = new ApplicantSkills();
-                            ab.setApplicant(applicant);
-                            ab.setLevel(applicant.getLevel());
-                            Skills sk = new Skills(currentCell.getStringCellValue());
-                            Skills skills = skillsList.stream().filter(skill -> skill.equals(sk)).findFirst().orElse(sk);
-                            ab.setSkills(skills);
-                            applicantSkillsList.add(ab);
-
-                            break;
-
-
-
-                    }
-
-                    cellIdx++;
-                }
-                applicant.setApplicantSkills(applicantSkillsList);
-                applicants.add(applicant);
+            // skip header
+            if (rowNumber == 0) {
+                rowNumber++;
+                continue;
             }
 
-            workbook.close();
+            Iterator<Cell> cellsInRow = currentRow.iterator();
 
-            return applicants;
+            Applicant applicant = new Applicant();
+            List<ApplicantSkills> applicantSkillsList = new ArrayList<>();
+            int cellIdx = 0;
+            while (cellsInRow.hasNext()) {
+                Cell currentCell = cellsInRow.next();
 
+                switch (cellIdx) {
+                    case 0:
+                        applicant.setFirstName((String) currentCell.getStringCellValue());
+                        break;
+
+                    case 1:
+                        applicant.setLastName(currentCell.getStringCellValue());
+                        break;
+
+                    case 2:
+                        applicant.setAddress(currentCell.getStringCellValue());
+                        break;
+
+                    case 3:
+                        applicant.setRegion(currentCell.getStringCellValue());
+                        break;
+
+                    case 4:
+                        applicant.setEdLevel(currentCell.getStringCellValue());
+                        break;
+
+                    case 5:
+                        applicant.setLevel(currentCell.getStringCellValue());
+                        break;
+
+                    default:
+                        ApplicantSkills ab = new ApplicantSkills();
+                        ab.setApplicant(applicant);
+                        ab.setLevel(applicant.getLevel());
+                        Skills sk = new Skills(currentCell.getStringCellValue());
+                        Skills skills = skillsList.stream().filter(skill -> skill.equals(sk)).findFirst().orElse(sk);
+                        ab.setSkills(skills);
+                        applicantSkillsList.add(ab);
+
+                        break;
+
+                }
+
+                cellIdx++;
+            }
+            applicant.setApplicantSkills(applicantSkillsList);
+            applicants.add(applicant);
+        }
+
+        workbook.close();
+
+        return applicants;
 
     }
 
@@ -144,7 +141,6 @@ public class Helper {
                         case 0:
                             skill.setName((String) currentCell.getStringCellValue());
                             break;
-
 
                     }
 
@@ -230,4 +226,3 @@ public class Helper {
     }
 
 }
-

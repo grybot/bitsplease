@@ -16,20 +16,20 @@ public class JobOffersController {
     @Autowired
     private JobOffersService jobOffersService;
 
-
     @GetMapping("JobOffers")
     public List<JobOffer> getJobOffers() {
         return jobOffersService.getJobOffers();
     }
+
     @PostMapping("JobOffer")
-    public JobOffer addJobOffer(@RequestBody JobOffer jobOffer){
+    public JobOffer addJobOffer(@RequestBody JobOffer jobOffer) {
         return jobOffersService.addJobOffer(jobOffer);
     }
+
     @PostMapping("jobOffer/{jobOfferId}/{skillId}")
     public JobOfferSkills addSkillsToJobOffers(@PathVariable int jobOfferId,
                                                @PathVariable int skillId) throws ApplicantNotFoundException {
         return jobOffersService.addSkillsToJobOffers(jobOfferId, skillId);
     }
-
 
 }

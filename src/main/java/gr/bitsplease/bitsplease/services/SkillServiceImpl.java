@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class SkillServiceImpl implements SkillService {
     @Autowired
-    private SkillsRepository skillsRepository;
+  private SkillsRepository skillsRepository;
 
     @Autowired
     private ApplicantSkillsRepository applicantSkillsRepository;
@@ -19,7 +19,8 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public List<Skills> getSkills() {
-        return skillsRepository.findAll();
+       return skillsRepository.findAll();
+
     }
 
     @Override

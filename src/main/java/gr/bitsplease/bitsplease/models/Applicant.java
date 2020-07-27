@@ -23,12 +23,12 @@ public class Applicant {
     private String level;
     private String address;
     private String region;
-    private String skills;
 
 
 
 
-    @OneToMany(mappedBy = "applicant")
+
+    @OneToMany(mappedBy = "applicant" ,cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ApplicantSkills> applicantSkills;
     @OneToMany(mappedBy = "applicant")

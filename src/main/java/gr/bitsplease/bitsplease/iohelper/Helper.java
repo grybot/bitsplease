@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import gr.bitsplease.bitsplease.models.Applicant;
-import gr.bitsplease.bitsplease.models.JobOffer;
-import gr.bitsplease.bitsplease.models.JobOfferSkills;
-import gr.bitsplease.bitsplease.models.Skills;
+import gr.bitsplease.bitsplease.models.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -19,14 +16,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
 
-
 public class Helper {
     public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     static String[] HEADERS = {"First Name", "Last Name", "Address", "Region", "Education Level", "Level", "Skills", "Skills", "Skills"};
 
     static String SHEET = "Applicants";
-    static String SHEET1= "Skills";
-    static String SHEET2= "JobOffers";
+    static String SHEET1 = "Skills";
+    static String SHEET2 = "JobOffers";
 
     public static boolean hasExcelFormat(MultipartFile file) {
 
@@ -37,8 +33,8 @@ public class Helper {
         return true;
     }
 
-    public static List<Applicant> excelToApplicants(InputStream is) {
-        try {
+    public static List<Applicant> excelToApplicants(InputStream is, List<Skills> skillsList) throws IOException {
+
             Workbook workbook = new XSSFWorkbook(is);
 
             Sheet sheet = workbook.getSheet(SHEET);
@@ -59,7 +55,7 @@ public class Helper {
                 Iterator<Cell> cellsInRow = currentRow.iterator();
 
                 Applicant applicant = new Applicant();
-
+                List<ApplicantSkills> applicantSkillsList = new ArrayList<>();
                 int cellIdx = 0;
                 while (cellsInRow.hasNext()) {
                     Cell currentCell = cellsInRow.next();
@@ -89,25 +85,32 @@ public class Helper {
                             applicant.setLevel(currentCell.getStringCellValue());
                             break;
 
-                        case 6:
-
-                            applicant.setSkills((String) currentCell.getStringCellValue());
+                        default:
+                            ApplicantSkills ab = new ApplicantSkills();
+                            ab.setApplicant(applicant);
+                            ab.setLevel(applicant.getLevel());
+                            Skills sk = new Skills(currentCell.getStringCellValue());
+                            Skills skills = skillsList.stream().filter(skill -> skill.equals(sk)).findFirst().orElse(sk);
+                            ab.setSkills(skills);
+                            applicantSkillsList.add(ab);
 
                             break;
+
+
+
                     }
 
                     cellIdx++;
                 }
-
+                applicant.setApplicantSkills(applicantSkillsList);
                 applicants.add(applicant);
             }
 
             workbook.close();
 
             return applicants;
-        } catch (IOException e) {
-            throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
-        }
+
+
     }
 
     public static List<Skills> excelToSkills(InputStream is) {
@@ -141,7 +144,6 @@ public class Helper {
                         case 0:
                             skill.setName((String) currentCell.getStringCellValue());
                             break;
-
 
 
                     }
@@ -204,9 +206,15 @@ public class Helper {
                             jobOffer.setEdLevel((String) currentCell.getStringCellValue());
                             break;
 
-//                        case 4:
-//                            jobOffer.setJobOfferSkills((List) currentCell.getArrayFormulaRange());
-//                            break;
+//                        default:
+//                            JobOfferSkills jo = new JobOfferSkills();
+//                            jo.set(applicant);
+//                            ab.setLevel(applicant.getLevel());
+//                            Skills sk = new Skills(currentCell.getStringCellValue());
+//                            Skills skills = skillsList.stream().filter(skill -> skill.equals(sk)).findFirst().orElse(sk);
+//                            ab.setSkills(skills);
+//                            applicantSkillsList.add(ab);
+////
                     }
 
                     cellIdx++;

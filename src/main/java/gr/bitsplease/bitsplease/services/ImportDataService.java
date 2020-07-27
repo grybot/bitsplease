@@ -27,11 +27,13 @@ public class ImportDataService {
 
     public void save(MultipartFile file) {
         try {
-            List<Applicant> applicants = Helper.excelToApplicants(file.getInputStream());
-            applicantRepository.saveAll(applicants);
 
             List<Skills> skills = Helper.excelToSkills(file.getInputStream());
-            skillsRepository.saveAll(skills);
+            List<Skills> skillsList = skillsRepository.saveAll(skills);
+
+            List<Applicant> applicants = Helper.excelToApplicants(file.getInputStream(),skillsList);
+            applicantRepository.saveAll(applicants);
+
 
             List<JobOffer> jobOffers = Helper.excelToJobOffers(file.getInputStream());
             jobOfferRepository.saveAll(jobOffers);

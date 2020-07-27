@@ -17,7 +17,7 @@ public interface ApplicantService {
 
     Applicant updateApplicant(Applicant applicant, int applicantId) throws ApplicantNotFoundException;
 
-    ApplicantSkills addSkillsToApplicant(int applicantId, int skillId)
-            throws ApplicantNotFoundException;
+//    ApplicantSkills addSkillsToApplicant(int applicantId, int skillId)
+//            throws ApplicantNotFoundException;
 
 }

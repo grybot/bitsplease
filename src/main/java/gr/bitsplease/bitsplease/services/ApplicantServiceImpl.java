@@ -51,39 +51,39 @@ public class ApplicantServiceImpl implements ApplicantService{
         applicantRepository.save(applicantInDB);
         return applicantInDB;
     }
-   @Override
-    public ApplicantSkills addSkillsToApplicant(int applicantId, int skillId)
-            throws ApplicantNotFoundException {
-        Skills skills = skillsRepository
-                .findById(skillId)
-                .orElseThrow(() -> new
-                        ApplicantNotFoundException("Cannot find applicant"));
-        Applicant applicant = applicantRepository
-                .findById(applicantId)
-                .orElseThrow(() -> new
-                        ApplicantNotFoundException("Cannot find Customer"));
-
-        Optional<ApplicantSkills> applicantSkillsOptional = applicantSkillsRepository
-
-                .findAll()
-                .stream()
-                .filter(op -> op.getApplicant()
-                        .equals(applicantId) && op.getSkills()
-                        .getSkillsId() == skillId)
-                .findFirst();
-
-
-    // if (applicantSkillsOptional.isPresent()) {
-
-    //    } else {
-      ApplicantSkills applicantSkills ;
-       Skills skillsInApplicant= applicantSkills.getSkills();
-
-       skillsInApplicant.setApplicantSkills(applicantSkills.setSkills(skillsInApplicant));
-
-              skillsRepository.save(skillsInApplicant);
-       applicantSkillsRepository.save(applicantSkills);
-
-         return applicantSkills;
-    }
+//   @Override
+//    public ApplicantSkills addSkillsToApplicant(int applicantId, int skillId)
+//            throws ApplicantNotFoundException {
+//        Skills skills = skillsRepository
+//                .findById(skillId)
+//                .orElseThrow(() -> new
+//                        ApplicantNotFoundException("Cannot find applicant"));
+//        Applicant applicant = applicantRepository
+//                .findById(applicantId)
+//                .orElseThrow(() -> new
+//                        ApplicantNotFoundException("Cannot find Customer"));
+//
+//        Optional<ApplicantSkills> applicantSkillsOptional = applicantSkillsRepository
+//
+//                .findAll()
+//                .stream()
+//                .filter(op -> op.getApplicant()
+//                        .equals(applicantId) && op.getSkills()
+//                        .getSkillsId() == skillId)
+//                .findFirst();
+//
+//
+//     if (applicantSkillsOptional.isPresent()) {
+//
+//        } else {
+//      ApplicantSkills applicantSkills ;
+//       Skills skillsInApplicant= applicantSkills.getSkills();
+//
+//       skillsInApplicant.setApplicantSkills(applicantSkills.setSkills(skillsInApplicant));
+//
+//              skillsRepository.save(skillsInApplicant);
+//       applicantSkillsRepository.save(applicantSkills);
+//
+//         return applicantSkills;
+//    }
 }

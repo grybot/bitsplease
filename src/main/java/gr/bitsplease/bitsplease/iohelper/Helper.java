@@ -90,7 +90,9 @@ public class Helper {
                             break;
 
                         case 6:
+
                             applicant.setSkills((String) currentCell.getStringCellValue());
+
                             break;
                     }
 

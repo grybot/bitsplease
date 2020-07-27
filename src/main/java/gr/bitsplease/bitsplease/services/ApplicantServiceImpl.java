@@ -57,10 +57,10 @@ public class ApplicantServiceImpl implements ApplicantService {
 
     @Override
     public ApplicantSkills addSkillsToApplicant(int applicantId, int skillId) throws ApplicantNotFoundException {
-        Skills product = skillsRepository
+        Skills skills = skillsRepository
                 .findById(skillId)
                 .orElseThrow(() -> new ApplicantNotFoundException("Cannot find skill "));
-        Applicant orders = applicantRepository
+        Applicant applicant = applicantRepository
                 .findById(applicantId)
                 .orElseThrow(() -> new ApplicantNotFoundException("Cannot find applicant"));
         Optional<ApplicantSkills> applicantSkillsOptional = applicantSkillsRepository
@@ -76,9 +76,9 @@ public class ApplicantServiceImpl implements ApplicantService {
             applicantSkill.setLevel(applicantSkill.getApplicant().getLevel());
         }else{
             applicantSkill = new ApplicantSkills();
-            applicantSkill.setApplicant(orders);
-            applicantSkill.setSkills(product);
-            applicantSkill.setLevel(orders.getLevel());
+            applicantSkill.setApplicant(applicant);
+            applicantSkill.setSkills(skills);
+            applicantSkill.setLevel(applicant.getLevel());
         }
         applicantSkillsRepository.save(applicantSkill);
         return applicantSkill;

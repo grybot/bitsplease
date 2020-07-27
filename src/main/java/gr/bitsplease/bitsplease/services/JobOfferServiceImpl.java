@@ -31,10 +31,10 @@ public class JobOfferServiceImpl implements JobOffersService {
     }
     @Override
     public JobOfferSkills addSkillsToJobOffers(int jobOfferId, int skillId) throws ApplicantNotFoundException {
-        Skills product = skillsRepository
+        Skills skills = skillsRepository
                 .findById(skillId)
                 .orElseThrow(() -> new ApplicantNotFoundException("Cannot find product"));
-        JobOffer orders = jobOfferRepository
+        JobOffer jobOffer = jobOfferRepository
                 .findById(jobOfferId)
                 .orElseThrow(() -> new ApplicantNotFoundException("Cannot find Customer"));
         Optional<JobOfferSkills> jobOfferSkillsOptional = jobOfferSkillsRepository
@@ -49,8 +49,8 @@ public class JobOfferServiceImpl implements JobOffersService {
             jobSkills.setSkills(jobSkills.getSkills());
         }else{
             jobSkills = new JobOfferSkills();
-            jobSkills.setJobOffer(orders);
-            jobSkills.setSkills(product);
+            jobSkills.setJobOffer(jobOffer);
+            jobSkills.setSkills(skills);
         }
         jobOfferSkillsRepository.save(jobSkills);
         return jobSkills;

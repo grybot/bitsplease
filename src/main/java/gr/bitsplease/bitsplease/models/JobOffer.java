@@ -21,9 +21,9 @@ public class JobOffer {
     private String titleOfPosition;
     private String edLevel;
     private String region;
-    private boolean fulfilled;
+    private boolean fulfilled = false;
 
-    @OneToMany(mappedBy = "jobOffer",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<JobOfferSkills> jobOfferSkills;
 

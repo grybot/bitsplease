@@ -35,7 +35,7 @@ public class ImportDataService {
             applicantRepository.saveAll(applicants);
 
 
-            List<JobOffer> jobOffers = Helper.excelToJobOffers(file.getInputStream(),skillsList);
+            List<JobOffer> jobOffers = Helper.excelToJobOffers(file.getInputStream(), skillsList);
             jobOfferRepository.saveAll(jobOffers);
 
         } catch (IOException e) {

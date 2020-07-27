@@ -35,79 +35,80 @@ public class Helper {
 
     public static List<Applicant> excelToApplicants(InputStream is, List<Skills> skillsList) throws IOException {
 
-        Workbook workbook = new XSSFWorkbook(is);
+            Workbook workbook = new XSSFWorkbook(is);
 
-        Sheet sheet = workbook.getSheet(SHEET);
-        Iterator<Row> rows = sheet.iterator();
+            Sheet sheet = workbook.getSheet(SHEET);
+            Iterator<Row> rows = sheet.iterator();
 
-        List<Applicant> applicants = new ArrayList<Applicant>();
+            List<Applicant> applicants = new ArrayList<Applicant>();
 
-        int rowNumber = 0;
-        while (rows.hasNext()) {
-            Row currentRow = rows.next();
+            int rowNumber = 0;
+            while (rows.hasNext()) {
+                Row currentRow = rows.next();
 
-            // skip header
-            if (rowNumber == 0) {
-                rowNumber++;
-                continue;
-            }
-
-            Iterator<Cell> cellsInRow = currentRow.iterator();
-
-            Applicant applicant = new Applicant();
-            List<ApplicantSkills> applicantSkillsList = new ArrayList<>();
-            int cellIdx = 0;
-            while (cellsInRow.hasNext()) {
-                Cell currentCell = cellsInRow.next();
-
-                switch (cellIdx) {
-                    case 0:
-                        applicant.setFirstName((String) currentCell.getStringCellValue());
-                        break;
-
-                    case 1:
-                        applicant.setLastName(currentCell.getStringCellValue());
-                        break;
-
-                    case 2:
-                        applicant.setAddress(currentCell.getStringCellValue());
-                        break;
-
-                    case 3:
-                        applicant.setRegion(currentCell.getStringCellValue());
-                        break;
-
-                    case 4:
-                        applicant.setEdLevel(currentCell.getStringCellValue());
-                        break;
-
-                    case 5:
-                        applicant.setLevel(currentCell.getStringCellValue());
-                        break;
-
-                    default:
-                        ApplicantSkills ab = new ApplicantSkills();
-                        ab.setApplicant(applicant);
-                        ab.setLevel(applicant.getLevel());
-                        Skills sk = new Skills(currentCell.getStringCellValue());
-                        Skills skills = skillsList.stream().filter(skill -> skill.equals(sk)).findFirst().orElse(sk);
-                        ab.setSkills(skills);
-                        applicantSkillsList.add(ab);
-
-                        break;
-
-
+                // skip header
+                if (rowNumber == 0) {
+                    rowNumber++;
+                    continue;
                 }
 
-                cellIdx++;
+                Iterator<Cell> cellsInRow = currentRow.iterator();
+
+                Applicant applicant = new Applicant();
+                List<ApplicantSkills> applicantSkillsList = new ArrayList<>();
+                int cellIdx = 0;
+                while (cellsInRow.hasNext()) {
+                    Cell currentCell = cellsInRow.next();
+
+                    switch (cellIdx) {
+                        case 0:
+                            applicant.setFirstName((String) currentCell.getStringCellValue());
+                            break;
+
+                        case 1:
+                            applicant.setLastName(currentCell.getStringCellValue());
+                            break;
+
+                        case 2:
+                            applicant.setAddress(currentCell.getStringCellValue());
+                            break;
+
+                        case 3:
+                            applicant.setRegion(currentCell.getStringCellValue());
+                            break;
+
+                        case 4:
+                            applicant.setEdLevel(currentCell.getStringCellValue());
+                            break;
+
+                        case 5:
+                            applicant.setLevel(currentCell.getStringCellValue());
+                            break;
+
+                        default:
+                            ApplicantSkills ab = new ApplicantSkills();
+                            ab.setApplicant(applicant);
+                            ab.setLevel(applicant.getLevel());
+                            Skills sk = new Skills(currentCell.getStringCellValue());
+                            Skills skills = skillsList.stream().filter(skill -> skill.equals(sk)).findFirst().orElse(sk);
+                            ab.setSkills(skills);
+                            applicantSkillsList.add(ab);
+
+                            break;
+
+
+
+                    }
+
+                    cellIdx++;
+                }
+                applicant.setApplicantSkills(applicantSkillsList);
+                applicants.add(applicant);
             }
-            applicant.setApplicantSkills(applicantSkillsList);
-            applicants.add(applicant);
-        }
 
-        workbook.close();
+            workbook.close();
 
-        return applicants;
+            return applicants;
 
 
     }
@@ -183,8 +184,8 @@ public class Helper {
                 Iterator<Cell> cellsInRow = currentRow.iterator();
 
                 JobOffer jobOffer = new JobOffer();
-
                 List<JobOfferSkills> jobOfferSkillsList = new ArrayList<>();
+
                 int cellIdx = 0;
                 while (cellsInRow.hasNext()) {
                     Cell currentCell = cellsInRow.next();
@@ -205,7 +206,6 @@ public class Helper {
                         case 3:
                             jobOffer.setEdLevel((String) currentCell.getStringCellValue());
                             break;
-
                         default:
                             JobOfferSkills jo = new JobOfferSkills();
                             jo.setJobOffer(jobOffer);
@@ -213,10 +213,8 @@ public class Helper {
                             Skills skills = skillsList.stream().filter(skill -> skill.equals(sk)).findFirst().orElse(sk);
                             jo.setSkills(skills);
                             jobOfferSkillsList.add(jo);
-
                             break;
                     }
-
                     cellIdx++;
                 }
                 jobOffer.setJobOfferSkills(jobOfferSkillsList);

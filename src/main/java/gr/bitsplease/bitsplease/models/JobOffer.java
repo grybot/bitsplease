@@ -23,7 +23,7 @@ public class JobOffer {
     private String region;
     private boolean fulfilled;
 
-    @OneToMany(mappedBy = "jobOffer")
+    @OneToMany(mappedBy = "jobOffer",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<JobOfferSkills> jobOfferSkills;
 

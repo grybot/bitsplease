@@ -162,7 +162,7 @@ public class Helper {
         }
     }
 
-    public static List<JobOffer> excelToJobOffers(InputStream is) {
+    public static List<JobOffer> excelToJobOffers(InputStream is,List<Skills> skillsList) {
         try {
             Workbook workbook = new XSSFWorkbook(is);
 
@@ -185,6 +185,7 @@ public class Helper {
 
                 JobOffer jobOffer = new JobOffer();
 
+                List<JobOfferSkills> jobOfferSkillsList = new ArrayList<>();
                 int cellIdx = 0;
                 while (cellsInRow.hasNext()) {
                     Cell currentCell = cellsInRow.next();
@@ -206,20 +207,33 @@ public class Helper {
                             jobOffer.setEdLevel((String) currentCell.getStringCellValue());
                             break;
 
-//                        default:
-//                            JobOfferSkills jo = new JobOfferSkills();
-//                            jo.set(applicant);
+                     default:
+                            JobOfferSkills jo = new JobOfferSkills();
+                            jo.setJobOffer(jobOffer);
+                            Skills sk = new Skills(currentCell.getStringCellValue());
+                            Skills skills = skillsList.stream().filter(skill -> skill.equals(sk)).findFirst().orElse(sk);
+                            jo.setSkills(skills);
+                            jobOfferSkillsList.add(jo);
 //                            ab.setLevel(applicant.getLevel());
 //                            Skills sk = new Skills(currentCell.getStringCellValue());
 //                            Skills skills = skillsList.stream().filter(skill -> skill.equals(sk)).findFirst().orElse(sk);
 //                            ab.setSkills(skills);
 //                            applicantSkillsList.add(ab);
+
+//                        ApplicantSkill ab = new ApplicantSkills();
+//                        ab.setApplicant(applicant);
+//                        ab.setLevel(applicant.getLevel());
+//                        Skills sk = new Skills(currentCell.getStringCellValue());
+//                        Skills skills = skillsList.stream().filter(skill -> skill.equals(sk)).findFirst().orElse(sk);
+//                        ab.setSkills(skills);
+//                        applicantSkillsList.add(ab);
 ////
+                         break;
                     }
 
                     cellIdx++;
                 }
-
+                jobOffer.setJobOfferSkills(jobOfferSkillsList);
                 jobOffers.add(jobOffer);
             }
 

@@ -17,7 +17,7 @@ import java.util.UUID;
 public class Match {
     @Id
     @GeneratedValue(generator = "UUID")
-    private UUID id;
+    private UUID matchId;
     private String typeOfMatching;
     private String status;
     private double percentage;

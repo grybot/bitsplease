@@ -2,6 +2,7 @@ package gr.bitsplease.bitsplease.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -28,5 +29,7 @@ public class Match {
 
     @ManyToOne
     private JobOffer jobOffer;
+
+
 
 }

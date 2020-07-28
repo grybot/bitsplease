@@ -34,4 +34,11 @@ public class ApplicantController {
             throws ApplicantNotFoundException {
         return applicantService.getApplicantById(applicantId);
     }
+
+    @GetMapping("applicantFiltered")
+    public List<Applicant> getApplicant(@RequestParam(required = false) String firstName
+            , @RequestParam(required = false) String region, @RequestParam(required = false) Integer skillId) {
+        return applicantService.getApplicant(firstName, region, skillId);
+
+    }
 }

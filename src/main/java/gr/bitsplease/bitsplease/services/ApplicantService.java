@@ -4,7 +4,9 @@ import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
 import gr.bitsplease.bitsplease.models.Applicant;
 import gr.bitsplease.bitsplease.models.ApplicantSkills;
 
+import javax.persistence.Column;
 import java.util.List;
+import java.util.Optional;
 
 public interface ApplicantService {
 
@@ -18,5 +20,8 @@ public interface ApplicantService {
 
     ApplicantSkills addSkillsToApplicant(int applicantId, int skillId)
             throws ApplicantNotFoundException;
+
+    List<Applicant> getApplicant(String firstName,
+                                     String region, Integer skillId);
 
 }

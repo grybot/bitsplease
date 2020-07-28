@@ -16,4 +16,7 @@ public interface JobOffersService {
     JobOffer addJobOffer(JobOffer jobOffer);
 
     JobOfferSkills addSkillsToJobOffers(int jobOfferId, int skillId) throws ApplicantNotFoundException;
+
+    List<JobOffer> getJobOffer(String companyName,
+                                 String region, Integer skillId);
 }

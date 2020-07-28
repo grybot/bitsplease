@@ -3,6 +3,7 @@ package gr.bitsplease.bitsplease.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
@@ -17,7 +18,7 @@ public class Applicant {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private int ApplicantId;
-    @Column(nullable=false)
+    
     private String firstName;
     @Column(nullable=false)
     private String lastName;
@@ -29,7 +30,7 @@ public class Applicant {
     private String level;
     @Column(nullable=false)
     private String address;
-    @Column(nullable=false)
+
     private String region;
 
 

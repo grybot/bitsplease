@@ -1,6 +1,7 @@
 package gr.bitsplease.bitsplease.controller;
 
 import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
+import gr.bitsplease.bitsplease.models.Applicant;
 import gr.bitsplease.bitsplease.models.ApplicantSkills;
 import gr.bitsplease.bitsplease.models.JobOffer;
 import gr.bitsplease.bitsplease.models.JobOfferSkills;
@@ -32,4 +33,10 @@ public class JobOffersController {
         return jobOffersService.addSkillsToJobOffers(jobOfferId, skillId);
     }
 
+    @GetMapping("jobOfferFiltered")
+    public List<JobOffer> getJobOffer(@RequestParam(required = false) String companyName
+            , @RequestParam(required = false) String region, @RequestParam(required = false) Integer skillId) {
+        return jobOffersService.getJobOffer(companyName, region, skillId);
+
+    }
 }

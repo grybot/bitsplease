@@ -31,7 +31,7 @@ public class ImportDataService {
             List<Skills> skills = Helper.excelToSkills(file.getInputStream());
             List<Skills> skillsList = skillsRepository.saveAll(skills);
 
-            List<Applicant> applicants = Helper.excelToApplicants(file.getInputStream(),skillsList);
+            List<Applicant> applicants = Helper.excelToApplicants(file.getInputStream(), skillsList);
             applicantRepository.saveAll(applicants);
 
 

@@ -8,5 +8,5 @@ import java.util.List;
 public interface ApplicantSkillsService {
 
     List<ApplicantSkills> getApplicantSkills();
-  //  ApplicantSkills addApplicantSkills(Skills skills);
+    // ApplicantSkills addApplicantSkills(Skills skills);
 }

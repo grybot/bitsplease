@@ -8,24 +8,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class SkillServiceImpl implements SkillService {
     @Autowired
-  private SkillsRepository skillsRepository;
+    private SkillsRepository skillsRepository;
 
     @Autowired
     private ApplicantSkillsRepository applicantSkillsRepository;
 
-
     @Override
     public List<Skills> getSkills() {
-       return skillsRepository.findAll();
+        return skillsRepository.findAll();
 
     }
 
     @Override
     public Skills addSkills(Skills skills) {
-     return skillsRepository.save(skills);
+        return skillsRepository.save(skills);
 
     }
 

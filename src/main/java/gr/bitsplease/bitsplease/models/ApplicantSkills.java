@@ -21,4 +21,6 @@ public class ApplicantSkills {
     private Applicant applicant;
     @ManyToOne(cascade = CascadeType.ALL)
     private Skills skills;
+
+
 }

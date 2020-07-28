@@ -16,6 +16,7 @@ public class JobOfferSkills {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String edLevel;
 
     @ManyToOne
     private JobOffer jobOffer;

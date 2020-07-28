@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,8 +31,10 @@ public class Applicant {
 
     @OneToMany(mappedBy = "applicant" ,cascade = CascadeType.ALL)
     @JsonIgnore
+    @ToString.Exclude
     private List<ApplicantSkills> applicantSkills;
     @OneToMany(mappedBy = "applicant")
     @JsonIgnore
+    @ToString.Exclude
     private List<Match> matches;
 }

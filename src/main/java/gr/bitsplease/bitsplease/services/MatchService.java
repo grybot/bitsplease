@@ -2,7 +2,6 @@ package gr.bitsplease.bitsplease.services;
 
 import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
 import gr.bitsplease.bitsplease.models.Match;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,17 +9,17 @@ import java.util.UUID;
 public interface MatchService {
     List<Match> getMatches() throws ApplicantNotFoundException;
 
-    Match getMatchById(UUID matchId);
+    Match getMatchById(UUID matchId) throws ApplicantNotFoundException;
 
     Match manualMatch(int applicantId, int jobOfferId) throws ApplicantNotFoundException;
 
-    boolean deleteMatch(UUID matchId);
+    boolean deleteMatch(UUID matchId) throws ApplicantNotFoundException;
 
-    Match updateMatch(Match match);
+    Match updateMatch(Match match, UUID matchId) throws ApplicantNotFoundException;
 
     List<Match> getfinalisedMatches();
 
     Match getFinalisedMatch(UUID matchId);
 
-    boolean finaliseMatch(UUID matchId);
+    boolean finaliseMatch(List<Match> matches, UUID matchId);
 }

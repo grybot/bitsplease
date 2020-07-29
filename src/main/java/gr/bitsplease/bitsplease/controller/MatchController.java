@@ -26,7 +26,7 @@ public class MatchController {
     public Match getMatchById(@PathVariable UUID matchId) throws ApplicantNotFoundException {
         return matchService.getMatchById(matchId);
     }
-    @PostMapping("match/delete/{matchId}")
+    @DeleteMapping("match/{matchId}")
     public boolean deleteMatch(@PathVariable UUID matchId) throws ApplicantNotFoundException{
         return matchService.deleteMatch(matchId);
     }

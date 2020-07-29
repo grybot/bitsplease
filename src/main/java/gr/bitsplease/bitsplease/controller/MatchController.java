@@ -6,7 +6,9 @@ import gr.bitsplease.bitsplease.services.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -14,6 +16,10 @@ public class MatchController {
     @Autowired
     private MatchService matchService;
 
+    @GetMapping("matcher")
+    public Collection<Map.Entry<Integer, Integer>> matching() throws ApplicantNotFoundException {
+        return  matchService.matchJobOffersWithApplicants().entries();
+    }
     @GetMapping("match")
     public List<Match> getMatches() throws ApplicantNotFoundException {
         return matchService.getMatches();
@@ -31,7 +37,7 @@ public class MatchController {
         return matchService.deleteMatch(matchId);
     }
     @PutMapping("match/{matchId}")
-    public Match updateMatch(@RequestBody Match match,
+    public Match updateMatch(@RequestBody  Match match,
                              @PathVariable UUID matchId) throws ApplicantNotFoundException{
         return matchService.updateMatch(match, matchId);
     }
@@ -40,7 +46,7 @@ public class MatchController {
         return matchService.getFinalisedMatches();
     }
     @GetMapping("match/finalised/{matchId}")
-    public Match getFinalisedMatch(UUID matchId){
+    public Match getFinalisedMatch(UUID matchId) throws ApplicantNotFoundException {
         return matchService.getFinalisedMatch(matchId);
     }
     @PutMapping("match/finalised/{matchId}")

@@ -24,6 +24,7 @@ public class Applicant {
     private String level;
     private String address;
     private String region;
+    private boolean active = true;
 
 
 

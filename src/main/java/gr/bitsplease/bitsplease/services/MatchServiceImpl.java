@@ -89,7 +89,7 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public List<Match> getfinalisedMatches() {
+    public List<Match> getFinalisedMatches() {
         List<Match> allMatches = matchRepository.findAll();
         List<Match> finalisedMatches = new ArrayList<>();
         for(Match match : allMatches){
@@ -107,7 +107,8 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public boolean finaliseMatch(List<Match> matches, UUID matchId) {
+    public boolean finaliseMatch(UUID matchId) {
+        List<Match> matches = matchRepository.findAll();
         for(Match match : matches){
             if(match.getMatchId().equals(matchId)){
                 match.setFinalised(true);

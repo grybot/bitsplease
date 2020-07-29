@@ -17,9 +17,9 @@ public interface MatchService {
 
     Match updateMatch(Match match, UUID matchId) throws ApplicantNotFoundException;
 
-    List<Match> getfinalisedMatches();
+    List<Match> getFinalisedMatches();
 
     Match getFinalisedMatch(UUID matchId);
 
-    boolean finaliseMatch(List<Match> matches, UUID matchId);
+    boolean finaliseMatch(UUID matchId);
 }

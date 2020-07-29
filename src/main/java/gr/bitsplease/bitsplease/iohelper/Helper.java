@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Helper {
     public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-  //  static String[] HEADERS = {"First Name", "Last Name", "Address", "Region", "Education Level", "Level", "Skills", "Skills", "Skills"};
+    //  static String[] HEADERS = {"First Name", "Last Name", "Address", "Region", "Education Level", "Level", "Skills", "Skills", "Skills"};
 
     static String SHEET = "Applicants";
     static String SHEET1 = "Skills";
@@ -206,13 +206,17 @@ public class Helper {
                             JobOfferSkills jo = new JobOfferSkills();
                             jo.setJobOffer(jobOffer);
                             Skills sk = new Skills(currentCell.getStringCellValue());
+
                             Skills skills = skillsList.stream().filter(skill -> skill.equals(sk)).findFirst().orElse(sk);
+
                             jo.setSkills(skills);
                             jobOfferSkillsList.add(jo);
                             break;
+
                     }
                     cellIdx++;
                 }
+
                 jobOffer.setJobOfferSkills(jobOfferSkillsList);
                 jobOffers.add(jobOffer);
             }

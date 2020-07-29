@@ -1,6 +1,7 @@
 package gr.bitsplease.bitsplease.services;
 
 import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.SkillNotFoundException;
 import gr.bitsplease.bitsplease.models.Skills;
 import gr.bitsplease.bitsplease.repository.ApplicantRepository;
 import gr.bitsplease.bitsplease.repository.ApplicantSkillsRepository;
@@ -31,26 +32,26 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public Skills updateSkills(Skills skills, int skillId) throws ApplicantNotFoundException {
+    public Skills updateSkills(Skills skills, int skillId) throws SkillNotFoundException {
         Skills skillinDB = skillsRepository
                 .findById(skillId)
-                .orElseThrow(() -> new ApplicantNotFoundException("Skill Not Found."));
+                .orElseThrow(() -> new SkillNotFoundException("Skill Not Found."));
         skillinDB.setName(skills.getName());
         skillsRepository.save(skillinDB);
         return skillinDB;
     }
 
     @Override
-    public boolean deleteSkills(int skillIndex) throws ApplicantNotFoundException {
+    public boolean deleteSkills(int skillIndex) throws SkillNotFoundException {
         skillsRepository.deleteById(skillIndex);
         return true;
     }
 
     @Override
-    public Skills getSkillById(int skillsId) throws ApplicantNotFoundException {
+    public Skills getSkillById(int skillsId) throws SkillNotFoundException {
         return skillsRepository
                 .findById(skillsId)
-                .orElseThrow(()-> new ApplicantNotFoundException("Couldn't find any skill based on this ID"));
+                .orElseThrow(()-> new SkillNotFoundException("Couldn't find any skill based on this ID"));
     }
 
 }

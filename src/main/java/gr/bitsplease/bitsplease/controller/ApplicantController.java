@@ -1,9 +1,11 @@
 package gr.bitsplease.bitsplease.controller;
 
 import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.SkillNotFoundException;
 import gr.bitsplease.bitsplease.iohelper.Helper;
 import gr.bitsplease.bitsplease.iohelper.ResponseMessage;
 import gr.bitsplease.bitsplease.models.Applicant;
+import gr.bitsplease.bitsplease.models.ApplicantSkills;
 import gr.bitsplease.bitsplease.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,4 +34,9 @@ public class ApplicantController {
     @GetMapping("applicant/{applicantId}")
     public Applicant getApplicantById(@PathVariable int applicantId)
             throws ApplicantNotFoundException {return  applicantService.getApplicantById(applicantId);}
+    @PostMapping("skill/{applicantId}/{skillId}")
+    public ApplicantSkills addSkillsToApplicant(@PathVariable int applicantId,
+                                                @PathVariable int skillId) throws ApplicantNotFoundException {
+        return applicantService.addSkillsToApplicant(applicantId, skillId);
+    }
 }

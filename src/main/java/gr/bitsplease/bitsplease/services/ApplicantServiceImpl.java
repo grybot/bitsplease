@@ -24,7 +24,6 @@ public class ApplicantServiceImpl implements ApplicantService {
     @Autowired
     private ApplicantSkillsRepository applicantSkillsRepository;
 
-
     @Override
     public List<Applicant> getApplicants() {
         return applicantRepository.findAll();

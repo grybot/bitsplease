@@ -1,6 +1,7 @@
 package gr.bitsplease.bitsplease.controller;
 
 import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.SkillNotFoundException;
 import gr.bitsplease.bitsplease.models.ApplicantSkills;
 import gr.bitsplease.bitsplease.models.Skills;
 import gr.bitsplease.bitsplease.services.ApplicantService;
@@ -28,22 +29,17 @@ public class SkillsController {
         return skillService.addSkills(skills);
     }
 
-    @PostMapping("skill/{applicantId}/{skillId}")
-    public ApplicantSkills addSkillsToApplicant(@PathVariable int applicantId,
-                                                @PathVariable int skillId) throws ApplicantNotFoundException {
-        return applicantService.addSkillsToApplicant(applicantId, skillId);
-    }
     @PutMapping("skill/{skillId}")
     public Skills updateSkills(@PathVariable int skillId,
-                               @RequestBody Skills skills) throws ApplicantNotFoundException {
+                               @RequestBody Skills skills) throws SkillNotFoundException {
         return skillService.updateSkills(skills, skillId);
     }
     @DeleteMapping("skill/{skillIndex}")
-    public boolean deleteSkills(@PathVariable int skillIndex) throws ApplicantNotFoundException {
+    public boolean deleteSkills(@PathVariable int skillIndex) throws SkillNotFoundException {
         return skillService.deleteSkills(skillIndex);
     }
     @GetMapping("skill/{skillId}")
-    public Skills getSkillById(@PathVariable int skillId) throws ApplicantNotFoundException {
+    public Skills getSkillById(@PathVariable int skillId) throws SkillNotFoundException {
         return skillService.getSkillById(skillId);
     }
 

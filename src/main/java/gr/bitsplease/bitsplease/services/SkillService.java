@@ -1,6 +1,6 @@
 package gr.bitsplease.bitsplease.services;
 
-import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.SkillNotFoundException;
 import gr.bitsplease.bitsplease.models.Skills;
 
 import java.util.List;
@@ -10,9 +10,9 @@ public interface SkillService {
 
      Skills addSkills(Skills skills);
 
-     Skills updateSkills(Skills skills, int skillId) throws ApplicantNotFoundException;
+     Skills updateSkills(Skills skills, int skillId) throws SkillNotFoundException;
 
-     boolean deleteSkills(int skillIndex) throws ApplicantNotFoundException;
+     boolean deleteSkills(int skillIndex) throws SkillNotFoundException;
 
-     Skills getSkillById(int skillsId) throws ApplicantNotFoundException;
+     Skills getSkillById(int skillsId) throws SkillNotFoundException;
 }

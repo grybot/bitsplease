@@ -33,5 +33,18 @@ public class SkillsController {
                                                 @PathVariable int skillId) throws ApplicantNotFoundException {
         return applicantService.addSkillsToApplicant(applicantId, skillId);
     }
+    @PutMapping("skill/{skillId}")
+    public Skills updateSkills(@PathVariable int skillId,
+                               @RequestBody Skills skills) throws ApplicantNotFoundException {
+        return skillService.updateSkills(skills, skillId);
+    }
+    @DeleteMapping("skill/{skillIndex}")
+    public boolean deleteSkills(@PathVariable int skillIndex) throws ApplicantNotFoundException {
+        return skillService.deleteSkills(skillIndex);
+    }
+    @GetMapping("skill/{skillId}")
+    public Skills getSkillById(@PathVariable int skillId) throws ApplicantNotFoundException {
+        return skillService.getSkillById(skillId);
+    }
 
 }

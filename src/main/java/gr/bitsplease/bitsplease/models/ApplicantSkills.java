@@ -1,5 +1,6 @@
 package gr.bitsplease.bitsplease.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +21,9 @@ public class ApplicantSkills {
     private String level;
 
     @ManyToOne
+    @JsonIgnore
     private Applicant applicant;
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private Skills skills;
 }

@@ -4,6 +4,8 @@ import gr.bitsplease.bitsplease.dto.SurveyAnswerStatistics;
 import gr.bitsplease.bitsplease.exceptions.ApplicantException;
 import gr.bitsplease.bitsplease.exceptions.JobOfferException;
 import gr.bitsplease.bitsplease.exceptions.MatchException;
+import gr.bitsplease.bitsplease.models.ApplicantSkills;
+import gr.bitsplease.bitsplease.models.JobOfferSkills;
 import gr.bitsplease.bitsplease.models.Match;
 
 import java.util.List;
@@ -86,4 +88,13 @@ public interface MatchService {
      */
     List<SurveyAnswerStatistics> getMatches();
 
+    void initialMatch() throws ApplicantException;
+
+    void createMatch(int applicantId, int jobOfferId) throws ApplicantException;
+
+    int partialPercentage(int matches, int requiredSkills);
+
+    int getMatches(List<JobOfferSkills> jobOfferSkillsList, List<ApplicantSkills> applicantSkillsList);
+
+    List<SurveyAnswerStatistics> returnMatching(String type, int percentage);
 }

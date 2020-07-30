@@ -58,4 +58,7 @@ public interface ApplicantService {
     ApplicantSkills addSkillsToApplicant(int applicantId, int skillId)
             throws ApplicantException, SkillException;
 
+    List<Applicant> getApplicant(String firstName,
+                                 String region, Integer skillId);
+
 }

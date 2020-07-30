@@ -19,10 +19,9 @@ public class Match {
     @Id
     @GeneratedValue(generator = "UUID")
     private UUID matchId;
-    private String typeOfMatching;
+    private String typeOfMatching = "Automatic";
     private String status;
     private double percentage;
-    private boolean finalised;
     private LocalDate finalisedDate;
 
     @ManyToOne

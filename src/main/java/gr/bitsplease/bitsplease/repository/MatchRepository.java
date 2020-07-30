@@ -11,10 +11,12 @@ package gr.bitsplease.bitsplease.repository;
 public interface MatchRepository extends JpaRepository<Match, UUID> {
     @Query(nativeQuery = true, value =
             "  SELECT   applicant_ApplicantId   App,  jobOffer_jobOfferId    Job  " +
-                    "           FROM  Match WHERE percentage =  100")
+                    "           FROM  Match WHERE percentage =  100 AND finalisedDate IS NULL ")
     List<SurveyAnswerStatistics> findSurveyCount();
     @Query(nativeQuery = true, value =
             "  SELECT   applicant_ApplicantId   App,  jobOffer_jobOfferId    Job  " +
-                    "           FROM  Match WHERE percentage <  100 AND percentage > :percentage ")
+                    "           FROM  Match WHERE percentage <  100 AND percentage > :percentage AND finalisedDate IS NULL ")
     List<SurveyAnswerStatistics> findPartialCount(@Param("percentage") int percentage);
+
+
 }

@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,5 +91,29 @@ public class ApplicantServiceImpl implements ApplicantService {
         }
         applicantSkillsRepository.save(applicantSkill);
         return applicantSkill;
+    }
+
+    @Override
+    public List<Applicant> getApplicant(String firstName, String region, Integer skillId) {
+        if (firstName != null)
+            return applicantRepository.findByFirstName(firstName);
+        if (region != null)
+            return applicantRepository.findByRegion(region);
+        if (skillId != 0) {
+            List<Applicant> applicantList = applicantRepository.findAll();
+            List<Applicant> applicantListMatched = new ArrayList<>();
+            for (Applicant applicant : applicantList) {
+                List<ApplicantSkills> applicantSkillsList = new ArrayList<>();
+                applicantSkillsList = applicant.getApplicantSkills();
+                for (ApplicantSkills applicantSkillsListMatch : applicantSkillsList) {
+                    if (applicantSkillsListMatch.getSkills().getSkillsId() == skillId) {
+                        applicantListMatched.add(applicant);
+                    }
+                }
+            }
+            return applicantListMatched;
+        }
+        return applicantRepository.findAll();
+
     }
 }

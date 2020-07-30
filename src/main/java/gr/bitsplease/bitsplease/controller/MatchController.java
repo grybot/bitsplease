@@ -126,10 +126,12 @@ public class MatchController {
     public boolean finaliseMatch(@PathVariable UUID matchId) throws MatchException {
         return matchService.finaliseMatch(matchId);
     }
-
-    /**
-     * Logger.
-     *
-     * @return the logDialog
-     */
+    @GetMapping("matcher/{type}/{percentage}")
+    public List<SurveyAnswerStatistics> returnMatching(@PathVariable String type,@PathVariable int percentage){
+        return  matchService.returnMatching(type,percentage);
+    }
+    @GetMapping("createMatch")
+    public void initialMatch() throws ApplicantException {
+        matchService.initialMatch();
+    }
 }

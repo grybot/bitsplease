@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -23,6 +23,7 @@ public class Match {
     private String status;
     private double percentage;
     private boolean finalised;
+    private LocalDate finalisedDate;
 
     @ManyToOne
     private Applicant applicant;

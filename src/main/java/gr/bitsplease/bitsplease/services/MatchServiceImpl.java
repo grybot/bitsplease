@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -110,6 +111,7 @@ public class MatchServiceImpl implements MatchService {
         match.setFinalised(true);
         match.getApplicant().setActive(false);
         match.getJobOffer().setFulfilled(true);
+        match.setFinalisedDate(LocalDate.now());
         matchRepository.save(match);
         return true;
     }

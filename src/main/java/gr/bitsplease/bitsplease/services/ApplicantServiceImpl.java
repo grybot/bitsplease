@@ -1,22 +1,31 @@
 package gr.bitsplease.bitsplease.services;
 
 
-import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.ApplicantException;
+import gr.bitsplease.bitsplease.exceptions.SkillException;
 import gr.bitsplease.bitsplease.models.Applicant;
 import gr.bitsplease.bitsplease.models.ApplicantSkills;
 import gr.bitsplease.bitsplease.models.Skills;
 import gr.bitsplease.bitsplease.repository.ApplicantRepository;
 import gr.bitsplease.bitsplease.repository.ApplicantSkillsRepository;
 import gr.bitsplease.bitsplease.repository.SkillsRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Applicant service.
+ */
 @Service
 public class ApplicantServiceImpl implements ApplicantService {
-
+    /**
+     * The Logger.
+     */
+    Logger logger = LoggerFactory.getLogger(ApplicantServiceImpl.class);
     @Autowired
     private ApplicantRepository applicantRepository;
     @Autowired
@@ -30,10 +39,10 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public Applicant getApplicantById(int applicantId) throws ApplicantNotFoundException {
+    public Applicant getApplicantById(int applicantId) throws ApplicantException {
         Applicant applicant = applicantRepository
                 .findById(applicantId)
-                .orElseThrow(() -> new ApplicantNotFoundException("Applicant Not Found"));
+                .orElseThrow(() -> new ApplicantException("Cannot find applicant with this ID."));
         return applicant;
     }
 
@@ -44,10 +53,10 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public Applicant updateApplicant(Applicant applicant, int applicantId) throws ApplicantNotFoundException {
+    public Applicant updateApplicant(Applicant applicant, int applicantId) throws ApplicantException {
         Applicant applicantInDB = applicantRepository
                 .findById(applicantId)
-                .orElseThrow(() -> new ApplicantNotFoundException("Applicant Not Found"));
+                .orElseThrow(() -> new ApplicantException("Could not find any applicant with this ID."));
         applicantInDB.setFirstName(applicant.getFirstName());
         applicantInDB.setLastName(applicant.getLastName());
         applicantRepository.save(applicantInDB);
@@ -55,25 +64,25 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public ApplicantSkills addSkillsToApplicant(int applicantId, int skillId) throws ApplicantNotFoundException {
+    public ApplicantSkills addSkillsToApplicant(int applicantId, int skillId) throws ApplicantException, SkillException {
         Skills skills = skillsRepository
                 .findById(skillId)
-                .orElseThrow(() -> new ApplicantNotFoundException("Cannot find skill "));
+                .orElseThrow(() -> new SkillException("Could not find any skill with this ID. "));
         Applicant applicant = applicantRepository
                 .findById(applicantId)
-                .orElseThrow(() -> new ApplicantNotFoundException("Cannot find applicant"));
+                .orElseThrow(() -> new ApplicantException("Could not find any applicant with this ID."));
         Optional<ApplicantSkills> applicantSkillsOptional = applicantSkillsRepository
                 .findAll()
                 .stream()
                 .filter(op -> op.getApplicant().getApplicantId() == applicantId && op.getSkills().getSkillsId() == skillId)
                 .findFirst();
         ApplicantSkills applicantSkill;
-        if(applicantSkillsOptional.isPresent()){
+        if (applicantSkillsOptional.isPresent()) {
             applicantSkill = applicantSkillsOptional.get();
             applicantSkill.setApplicant(applicantSkill.getApplicant());
             applicantSkill.setSkills(applicantSkill.getSkills());
             applicantSkill.setLevel(applicantSkill.getApplicant().getLevel());
-        }else{
+        } else {
             applicantSkill = new ApplicantSkills();
             applicantSkill.setApplicant(applicant);
             applicantSkill.setSkills(skills);

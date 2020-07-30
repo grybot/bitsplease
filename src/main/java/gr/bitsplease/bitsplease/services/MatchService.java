@@ -1,31 +1,89 @@
 package gr.bitsplease.bitsplease.services;
 
-import com.google.common.collect.Multimap;
-import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
-import gr.bitsplease.bitsplease.exceptions.MatchNotFoundException;
+import gr.bitsplease.bitsplease.dto.SurveyAnswerStatistics;
+import gr.bitsplease.bitsplease.exceptions.ApplicantException;
+import gr.bitsplease.bitsplease.exceptions.JobOfferException;
+import gr.bitsplease.bitsplease.exceptions.MatchException;
 import gr.bitsplease.bitsplease.models.Match;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.zip.ZipFile;
 
+/**
+ * The interface Match service.
+ */
 public interface MatchService {
-    List<Match> getMatches() throws MatchNotFoundException;
 
-    Match getMatchById(UUID matchId) throws MatchNotFoundException;
+    /**
+     * Gets match by id.
+     *
+     * @param matchId the match id
+     * @return the match by id
+     * @throws MatchException if match is not found by id
+     */
+    Match getMatchById(UUID matchId) throws MatchException;
 
-    Match manualMatch(int applicantId, int jobOfferId) throws MatchNotFoundException;
+    /**
+     * Manual match applicant with job offer.
+     *
+     * @param applicantId the applicant id
+     * @param jobOfferId  the job offer id
+     * @return new match
+     * @throws MatchException     if match is not found by id
+     * @throws JobOfferException  if job offer is not found by id
+     * @throws ApplicantException if applicant is not found by id
+     */
+    Match manualMatch(int applicantId, int jobOfferId) throws MatchException, JobOfferException, ApplicantException;
 
-    boolean deleteMatch(UUID matchId) throws MatchNotFoundException;
+    /**
+     * Delete match.
+     *
+     * @param matchId the match id
+     * @return boolean(true if match is deleted, false if not)
+     * @throws MatchException if match is not found by id
+     */
+    boolean deleteMatch(UUID matchId) throws MatchException;
 
-    Match updateMatch(Match match, UUID matchId) throws MatchNotFoundException;
+    /**
+     * Update match.
+     *
+     * @param match   the match
+     * @param matchId the match id
+     * @return updated match
+     * @throws MatchException if match not found by id
+     */
+    Match updateMatch(Match match, UUID matchId) throws MatchException;
 
+    /**
+     * Gets finalised matches.
+     *
+     * @return list of finalised matches
+     */
     List<Match> getFinalisedMatches();
 
-    Match getFinalisedMatch(UUID matchId) throws MatchNotFoundException;
+    /**
+     * Gets finalised match.
+     *
+     * @param matchId the match id
+     * @return finalised match found by id
+     * @throws MatchException match is not found by id
+     */
+    Match getFinalisedMatch(UUID matchId) throws MatchException;
 
-    boolean finaliseMatch(UUID matchId) throws MatchNotFoundException;
+    /**
+     * Finalise match.
+     *
+     * @param matchId the match id
+     * @return boolean(true if match was finalised, false if not
+     * @throws MatchException match is not found by id
+     */
+    boolean finaliseMatch(UUID matchId) throws MatchException;
 
-    List<Match> matchJobOffersWithApplicants() throws MatchNotFoundException;
+    /**
+     * Gets matches.
+     *
+     * @return all matches from database
+     */
+    List<SurveyAnswerStatistics> getMatches();
 
 }

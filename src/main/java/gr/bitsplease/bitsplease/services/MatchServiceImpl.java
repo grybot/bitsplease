@@ -1,19 +1,25 @@
 package gr.bitsplease.bitsplease.services;
 
-import gr.bitsplease.bitsplease.exceptions.MatchNotFoundException;
-import gr.bitsplease.bitsplease.models.*;
+import gr.bitsplease.bitsplease.dto.SurveyAnswerStatistics;
+import gr.bitsplease.bitsplease.exceptions.ApplicantException;
+import gr.bitsplease.bitsplease.exceptions.JobOfferException;
+import gr.bitsplease.bitsplease.exceptions.MatchException;
+import gr.bitsplease.bitsplease.models.Applicant;
+import gr.bitsplease.bitsplease.models.JobOffer;
+import gr.bitsplease.bitsplease.models.Match;
 import gr.bitsplease.bitsplease.repository.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class MatchServiceImpl implements MatchService {
+    Logger logger = LoggerFactory.getLogger(MatchServiceImpl.class);
     @Autowired
     private ApplicantSkillsRepository applicantSkillsRepository;
     @Autowired
@@ -33,13 +39,13 @@ public class MatchServiceImpl implements MatchService {
 
 
     @Override
-    public Match manualMatch(int applicantSkillsId, int jobOfferId) throws MatchNotFoundException {
+    public Match manualMatch(int applicantSkillsId, int jobOfferId) throws MatchException, JobOfferException, ApplicantException {
         Applicant applicant = applicantRepository
                 .findById(applicantSkillsId)
-                .orElseThrow(() -> new MatchNotFoundException("Applicant Not found"));
+                .orElseThrow(() -> new ApplicantException("Applicant Not found"));
         JobOffer jobOffer = jobOfferRepository
                 .findById(jobOfferId)
-                .orElseThrow(() -> new MatchNotFoundException("Job Offer not found"));
+                .orElseThrow(() -> new JobOfferException("Job Offer not found"));
         Match match = new Match();
         match.setTypeOfMatching("Manual");
         match.setApplicant(applicant);
@@ -49,28 +55,23 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public List<Match> getMatches() {
-        return matchRepository.findAll();
-    }
-
-    @Override
-    public Match getMatchById(UUID matchId) throws MatchNotFoundException {
+    public Match getMatchById(UUID matchId) throws MatchException {
         Match match = matchRepository
                 .findById(matchId)
-                .orElseThrow(() -> new MatchNotFoundException("Match ID wasn't associated with any match."));
+                .orElseThrow(() -> new MatchException("Match ID wasn't associated with any match."));
         return match;
     }
 
     @Override
-    public boolean deleteMatch(UUID matchId) throws MatchNotFoundException {
+    public boolean deleteMatch(UUID matchId) throws MatchException {
         matchRepository.deleteById(matchId);
         return true;
     }
 
     @Override
-    public Match updateMatch(Match match, UUID matchId) throws MatchNotFoundException {
+    public Match updateMatch(Match match, UUID matchId) throws MatchException {
         Match matchToBe = matchRepository.findById(matchId)
-                .orElseThrow(() -> new MatchNotFoundException("Couldn't find any match with the specified ID."));
+                .orElseThrow(() -> new MatchException("Couldn't find any match with the specified ID."));
         matchToBe.setJobOffer(match.getJobOffer());
         matchToBe.setApplicant(match.getApplicant());
         return matchToBe;
@@ -90,22 +91,22 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Match getFinalisedMatch(UUID matchId) throws MatchNotFoundException {
+    public Match getFinalisedMatch(UUID matchId) throws MatchException {
         Match match = matchRepository
                 .findById(matchId)
-                .orElseThrow(() -> new MatchNotFoundException("No match found"));
+                .orElseThrow(() -> new MatchException("Could not find any match with this ID."));
         if (getFinalisedMatches().contains(match)) {
             return match;
         } else {
-            throw new MatchNotFoundException("This match is not finalised.");
+            throw new MatchException("This match is not finalised.");
         }
     }
 
     @Override
-    public boolean finaliseMatch(UUID matchId) throws MatchNotFoundException {
+    public boolean finaliseMatch(UUID matchId) throws MatchException {
         Match match = matchRepository
                 .findById(matchId)
-                .orElseThrow(() -> new MatchNotFoundException("This ID is not associated with any match"));
+                .orElseThrow(() -> new MatchException("This ID is not associated with any match"));
         match.setFinalised(true);
         match.getApplicant().setActive(false);
         match.getJobOffer().setFulfilled(true);
@@ -113,57 +114,11 @@ public class MatchServiceImpl implements MatchService {
         return true;
     }
 
+    @Override
+    public List<SurveyAnswerStatistics> getMatches() {
 
-    public boolean matches(int applicantId, int jobOfferId) throws MatchNotFoundException {
-        List<ApplicantSkills> applicantSkillsList = new ArrayList();
-        List<JobOfferSkills> jobOfferSkillsList = new ArrayList();
-        Optional<Applicant> applicantOptional = applicantRepository.findById(applicantId);
-        if (applicantOptional.isPresent()) {
-            Applicant applicant = applicantOptional.get();
-            applicantSkillsList = applicant.getApplicantSkills();
-        } else
-            throw new MatchNotFoundException("not such applicant");
-        Optional<JobOffer> jobOfferOptional = jobOfferRepository.findById(jobOfferId);
-        if (jobOfferOptional.isPresent()) {
-            JobOffer jobOffer = jobOfferOptional.get();
-            jobOfferSkillsList = jobOffer.getJobOfferSkills();
-        }
-        requiredSkills = jobOfferSkillsList.size();
-        matches = getMatches(jobOfferSkillsList, applicantSkillsList);
-        if (requiredSkills == matches)
-            return true;
-        else
-            return false;
-    }
-
-    public int getMatches(List<JobOfferSkills> jobOfferSkillsList, List<ApplicantSkills> applicantSkillsList) {
-        List<Skills> jobOfferSkills = jobOfferSkillsList.stream().map(js -> js.getSkills()).collect(Collectors.toList());
-        List<Skills> applicantSkills = applicantSkillsList.stream().map(js -> js.getSkills()).collect(Collectors.toList());
-        List<Skills> matchList = new ArrayList(jobOfferSkills);
-        matchList.retainAll(applicantSkills);
-        return matchList.size();
-    }
-
-    public List<Match> matchJobOffersWithApplicants() throws MatchNotFoundException {
-        List<Applicant> ab = applicantRepository.findAll();
-        List<JobOffer> jo = jobOfferRepository.findAll();
-        List<Match> allMatches = new ArrayList<>();
-        for (JobOffer job : jo) {
-            int jobid = job.getJobOfferId();
-            for (Applicant app : ab) {
-                int apid = app.getApplicantId();
-                if (matches(apid, jobid) && app.getLevel().equals(job.getEdLevel())) {
-                    Match match = new Match();
-                    match.setApplicant(app);
-                    match.setJobOffer(job);
-                    match.setPercentage(100);
-                    match.setTypeOfMatching("Automatic");
-                    match.setStatus("Proposed");
-                    matchRepository.save(match);
-                    allMatches.add(match);
-                }
-            }
-        }
-        return allMatches;
+        List<SurveyAnswerStatistics> list = null;
+        list = matchRepository.findSurveyCount();
+        return list;
     }
 }

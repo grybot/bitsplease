@@ -192,4 +192,24 @@ public class MatchServiceImpl implements MatchService {
             list = matchRepository.findPartialCount(percentage);
         return list;
     }
+
+    @Override
+    public Optional<Match> getMatchByAppIDandJobID(int applicantId, int jobOfferId) throws ApplicantException, JobOfferException, MatchException {
+        Applicant applicant = applicantRepository
+                .findById(applicantId)
+                .orElseThrow(() -> new ApplicantException("No applicant is associated with this ID."));
+        JobOffer jobOffer = jobOfferRepository
+                .findById(jobOfferId)
+                .orElseThrow(() -> new JobOfferException("No job offer is associated with this ID."));
+        Optional<Match> match = matchRepository
+                .findAll()
+                .stream()
+                .filter(po -> po.getApplicant().equals(applicant) && po.getJobOffer().equals(jobOffer))
+                .findFirst();
+        if (match.isPresent()) {
+            return match;
+        }else{
+            throw new MatchException("Couldn't generate any match with the given criteria.");
+        }
+    }
 }

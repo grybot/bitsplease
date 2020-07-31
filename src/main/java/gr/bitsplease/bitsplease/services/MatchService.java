@@ -9,6 +9,7 @@ import gr.bitsplease.bitsplease.models.JobOfferSkills;
 import gr.bitsplease.bitsplease.models.Match;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -97,4 +98,6 @@ public interface MatchService {
     int getMatches(List<JobOfferSkills> jobOfferSkillsList, List<ApplicantSkills> applicantSkillsList);
 
     List<SurveyAnswerStatistics> returnMatching(String type, int percentage);
+
+    Optional<Match> getMatchByAppIDandJobID(int applicantId, int jobOfferId) throws ApplicantException, JobOfferException, MatchException;
 }

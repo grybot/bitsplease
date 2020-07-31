@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -133,5 +134,10 @@ public class MatchController {
     @GetMapping("createMatch")
     public void initialMatch() throws ApplicantException {
         matchService.initialMatch();
+    }
+    @GetMapping("match/{applicantId}/{jobOfferId}")
+    public Optional<Match> getMatchByAppIDandJobID(@PathVariable int applicantId, @PathVariable int jobOfferId)
+            throws MatchException, JobOfferException, ApplicantException {
+        return matchService.getMatchByAppIDandJobID(applicantId, jobOfferId);
     }
 }

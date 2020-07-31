@@ -42,7 +42,7 @@ public interface MatchService {
      * Delete match.
      *
      * @param matchId the match id
-     * @return boolean(true if match is deleted, false if not)
+     * @return boolean(true if match is deleted, false if not) boolean
      * @throws MatchException if match is not found by id
      */
     boolean deleteMatch(UUID matchId) throws MatchException;
@@ -77,7 +77,7 @@ public interface MatchService {
      * Finalise match.
      *
      * @param matchId the match id
-     * @return boolean(true if match was finalised, false if not
+     * @return boolean(true if match was finalised, false if not boolean
      * @throws MatchException match is not found by id
      */
     boolean finaliseMatch(UUID matchId) throws MatchException;
@@ -89,15 +89,56 @@ public interface MatchService {
      */
     List<SurveyAnswerStatistics> getMatches();
 
+    /**
+     * Initial match.
+     */
     void initialMatch() throws ApplicantException;
 
+    /**
+     * Create match.
+     *
+     * @param applicantId the applicant id
+     * @param jobOfferId  the job offer id
+     * @throws ApplicantException if applicant is not found by id
+     */
     void createMatch(int applicantId, int jobOfferId) throws ApplicantException;
 
+    /**
+     * Partial percentage int.
+     *
+     * @param matches        the matches
+     * @param requiredSkills the required skills
+     * @return the int
+     */
     int partialPercentage(int matches, int requiredSkills);
 
+    /**
+     * Gets matches.
+     *
+     * @param jobOfferSkillsList  the job offer skills list
+     * @param applicantSkillsList the applicant skills list
+     * @return the matches
+     */
     int getMatches(List<JobOfferSkills> jobOfferSkillsList, List<ApplicantSkills> applicantSkillsList);
 
+    /**
+     * Return matching list.
+     *
+     * @param type       the type
+     * @param percentage the percentage
+     * @return the list
+     */
     List<SurveyAnswerStatistics> returnMatching(String type, int percentage);
 
+    /**
+     * Gets match by app i dand job id.
+     *
+     * @param applicantId the applicant id
+     * @param jobOfferId  the job offer id
+     * @return the match by app i dand job id
+     * @throws ApplicantException the applicant exception
+     * @throws JobOfferException  the job offer exception
+     * @throws MatchException     the match exception
+     */
     Optional<Match> getMatchByAppIDandJobID(int applicantId, int jobOfferId) throws ApplicantException, JobOfferException, MatchException;
 }

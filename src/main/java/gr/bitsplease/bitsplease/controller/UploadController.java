@@ -26,10 +26,10 @@ public class UploadController {
     private ImportDataService importDataService;
 
     /**
-     * Upload file response entity.
+     * Upload file class.
      *
-     * @param file the file
-     * @return the response entity
+     * @param file with import data
+     * @return UNDER CONSTRUCTION
      */
     @PostMapping("upload")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
@@ -49,9 +49,4 @@ public class UploadController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
     }
 
-    /**
-     * Index string.
-     *
-     * @return the string
-     */
 }

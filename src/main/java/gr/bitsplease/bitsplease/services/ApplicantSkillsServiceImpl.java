@@ -9,13 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-/**
- * The type Applicant skills service.
- */
+
 public class ApplicantSkillsServiceImpl implements ApplicantSkillsService {
-    /**
-     * The Logger.
-     */
+
     Logger logger = LoggerFactory.getLogger(ApplicantSkillsServiceImpl.class);
     @Autowired
     private ApplicantSkillsRepository applicantSkillsRepository;

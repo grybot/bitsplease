@@ -34,17 +34,25 @@ public interface ApplicantService {
      * @param applicant the applicant
      * @return a new applicant
      */
-    Applicant addApplicant(Applicant applicant);
+    Applicant addApplicant(Applicant applicant) throws ApplicantException;
 
     /**
-     * Update applicant.
+     * Update applicant by id.
      *
-     * @param applicant   the applicant
      * @param applicantId the applicant id
-     * @return updated applicant
-     * @throws ApplicantException if applicant not found by id
+     * @param firstName the applicant firstName
+     * @param lastName the applicant lastName
+     * @param active if the applicant is active
+     * @param level the applicant level
+     * @param address the applicant address
+     * @param region the applicant region
+     * @return the applicant specified by ID
+     * @throws ApplicantException If applicant is not found by id
      */
-    Applicant updateApplicant(Applicant applicant, int applicantId) throws ApplicantException;
+   // Applicant updateApplicant(int applicantId, String firstName, String lastName, boolean active, String level, String address, String region) throws ApplicantException;
+
+    Applicant updateApplicant(int applicantId, String firstName, String lastName, boolean active, String level, String address, String region) throws ApplicantException;
+
 
     /**
      * Add skills to applicant.

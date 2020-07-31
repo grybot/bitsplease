@@ -50,7 +50,7 @@ public class SkillsController {
     /**
      * Update skill.
      *
-     * @param skillId the skill id
+     * @param skillId unique identifier of skill
      * @param skills  the skills
      * @return updated skill
      * @throws SkillException the skill exception
@@ -84,10 +84,4 @@ public class SkillsController {
     public Skills getSkillById(@PathVariable int skillId) throws SkillException {
         return skillService.getSkillById(skillId);
     }
-
-    /**
-     * Index string.
-     *
-     * @return log dialogue
-     */
 }

@@ -89,7 +89,7 @@ public class MatchController {
      * @throws MatchException if match is not found by id
      */
     @PutMapping("match/{matchId}")
-    public Match updateMatch(@RequestBody  Match match,
+    public Match updateMatch(@RequestBody Match match,
                              @PathVariable UUID matchId) throws MatchException {
         return matchService.updateMatch(match, matchId);
     }
@@ -100,7 +100,7 @@ public class MatchController {
      * @return list of finalised matches
      */
     @GetMapping("match/finalised")
-    public List<Match> getFinalisedMatches(){
+    public List<Match> getFinalisedMatches() {
         return matchService.getFinalisedMatches();
     }
 
@@ -117,24 +117,47 @@ public class MatchController {
     }
 
     /**
-     * Finalise match boolean.
+     * Finalise match.
      *
-     * @param matchId the match id
-     * @return boolean (if match was finalised)
+     * @param matchId match id
+     * @return boolean(true if match exists and successfully deleted, if false error will be thrown) boolean
      * @throws MatchException if match is not found by id
      */
     @PutMapping("match/finalised/{matchId}")
     public boolean finaliseMatch(@PathVariable UUID matchId) throws MatchException {
         return matchService.finaliseMatch(matchId);
     }
+
+    /**
+     * Return matching list.
+     *
+     * @param type       type of match(partial or total)
+     * @param percentage the lowest partial match percentage
+     * @return list of all matches that match the criteria above
+     */
     @GetMapping("matcher/{type}/{percentage}")
-    public List<SurveyAnswerStatistics> returnMatching(@PathVariable String type,@PathVariable int percentage){
-        return  matchService.returnMatching(type,percentage);
+    public List<SurveyAnswerStatistics> returnMatching(@PathVariable String type, @PathVariable int percentage) {
+        return matchService.returnMatching(type, percentage);
     }
+
+    /**
+     * Creates matches.
+     */
     @GetMapping("createMatch")
     public void initialMatch() throws ApplicantException {
         matchService.initialMatch();
     }
+
+    /**
+     * Find match in which appID and jobID are connected.
+     *
+     * @param applicantId the applicant id
+     * @param jobOfferId  the job offer id
+     * @return match that is associated with both appID and jobID
+     * @throws MatchException     if there is no match that connects both appID and jobID
+     * @throws JobOfferException  if there is no jobOffer associated with the jobID
+     * @throws ApplicantException if there is not applicant associated with the appID
+     */
     @GetMapping("match/{applicantId}/{jobOfferId}")
     public Optional<Match> getMatchByAppIDandJobID(@PathVariable int applicantId, @PathVariable int jobOfferId)
             throws MatchException, JobOfferException, ApplicantException {

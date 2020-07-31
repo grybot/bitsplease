@@ -49,17 +49,38 @@ public class ApplicantServiceImpl implements ApplicantService {
 
 
     @Override
-    public Applicant addApplicant(Applicant applicant) {
+    public Applicant addApplicant(Applicant applicant) throws ApplicantException{
+        if (applicant == null)
+            throw new ApplicantException("Null Applicant");
+        if (applicant.getEmail() == null || !applicant.getEmail().contains("@"))
+            throw new ApplicantException("invalid applicant's email");
         return applicantRepository.save(applicant);
     }
 
+//    @Override
+//    public Applicant updateApplicant(int applicantId, String firstName, String lastName, boolean active, String level, String address, String region) throws ApplicantException {
+//        Applicant applicantInDB = applicantRepository
+//                .findById(applicantId)
+//                .orElseThrow(() -> new ApplicantException("Could not find any applicant with this ID."));
+//        applicantInDB.setFirstName(firstName);
+//        applicantInDB.setLastName(lastName);
+//        applicantInDB.setActive(active);
+//        applicantInDB.setAddress(address);
+//        applicantInDB.setRegion(region);
+//        applicantInDB.setLevel(level);
+//        applicantRepository.save(applicantInDB);
+//        return applicantInDB;
+//    }
+
     @Override
-    public Applicant updateApplicant(Applicant applicant, int applicantId) throws ApplicantException {
+    public Applicant updateApplicant(int applicantId, String firstName, String lastName, boolean active, String level, String address, String region) throws ApplicantException {
         Applicant applicantInDB = applicantRepository
                 .findById(applicantId)
                 .orElseThrow(() -> new ApplicantException("Could not find any applicant with this ID."));
-        applicantInDB.setFirstName(applicant.getFirstName());
-        applicantInDB.setLastName(applicant.getLastName());
+        if (firstName == null) applicantInDB.setFirstName(applicantInDB.getFirstName()); else applicantInDB.setFirstName(firstName);
+        applicantInDB.setLastName(lastName);
+        applicantInDB.setAddress(address);
+        applicantInDB.setRegion(region);
         applicantRepository.save(applicantInDB);
         return applicantInDB;
     }
@@ -116,4 +137,6 @@ public class ApplicantServiceImpl implements ApplicantService {
         return applicantRepository.findAll();
 
     }
+
+
 }

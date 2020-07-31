@@ -41,7 +41,7 @@ public class ApplicantController {
      * @return new applicant
      */
     @PostMapping("applicant")
-    public Applicant addApplicant(@RequestBody Applicant applicant) {
+    public Applicant addApplicant(@RequestBody Applicant applicant) throws ApplicantException {
         return applicantService.addApplicant(applicant);
     }
 
@@ -56,6 +56,27 @@ public class ApplicantController {
     public Applicant getApplicantById(@PathVariable int applicantId)
             throws ApplicantException {
         return applicantService.getApplicantById(applicantId);
+    }
+    /**
+     * Update applicant by id.
+     *
+     * @param applicantId the applicant id
+     * @param firstName the applicant firstName
+     * @param lastName the applicant lastName
+     * @param active if the applicant is active
+     * @param level the applicant level
+     * @param address the applicant address
+     * @param region the applicant region
+     * @return the applicant specified by ID
+     * @throws ApplicantException If applicant is not found by id
+     */
+    @PatchMapping("applicant/{applicantId}/{firstName}/{lastName}/{active}/{level}/{address}/{region}")
+    public Applicant updateApplicant(@PathVariable(required = true) int applicantId,
+                                     @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName,
+                                     @RequestParam(required = false) boolean active, @RequestParam(required = false) String level,
+                                     @RequestParam(required = false) String address, @RequestParam(required = false) String region)
+            throws ApplicantException {
+        return applicantService.updateApplicant(applicantId, firstName, lastName, active, level, address, region);
     }
 
     /**
@@ -72,11 +93,4 @@ public class ApplicantController {
                                                 @PathVariable int skillId) throws ApplicantException, SkillException {
         return applicantService.addSkillsToApplicant(applicantId, skillId);
     }
-
-    /**
-     * Index string.
-     *
-     * @return the string
-     */
-
 }

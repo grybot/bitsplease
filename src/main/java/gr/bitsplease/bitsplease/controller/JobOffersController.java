@@ -42,7 +42,7 @@ public class JobOffersController {
      * @return new job order
      */
     @PostMapping("JobOffer")
-    public JobOffer addJobOffer(@RequestBody JobOffer jobOffer){
+    public JobOffer addJobOffer(@RequestBody JobOffer jobOffer) {
         return jobOffersService.addJobOffer(jobOffer);
     }
 
@@ -72,6 +72,4 @@ public class JobOffersController {
     public boolean deleteJobOffer(@PathVariable int jobOfferId) throws JobOfferException {
         return jobOffersService.deleteJobOffer(jobOfferId);
     }
-
-
 }

@@ -1,10 +1,12 @@
 package gr.bitsplease.bitsplease.services;
 
+import gr.bitsplease.bitsplease.dto.MatchedReport;
 import gr.bitsplease.bitsplease.dto.ReportNotMatched;
 import gr.bitsplease.bitsplease.dto.Reporter;
 import gr.bitsplease.bitsplease.repository.ApplicantRepository;
 import gr.bitsplease.bitsplease.repository.JobOfferRepository;
 import gr.bitsplease.bitsplease.repository.JobOfferSkillsRepository;
+import gr.bitsplease.bitsplease.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,11 @@ public class ReporterServiceImpl implements ReporterService {
     private ApplicantRepository applicantRepository;
     @Autowired
     private JobOfferRepository jobOfferRepository;
-    @Override
 
+    @Autowired
+    private MatchRepository matchRepository;
+
+    @Override
     public List<Reporter> getOffered() {
 
         List<Reporter> list;
@@ -35,4 +40,12 @@ public class ReporterServiceImpl implements ReporterService {
         List<ReportNotMatched> list;
         return list =jobOfferRepository.getNotMatchedByApplicant();
     }
+
+    @Override
+    public List<MatchedReport> getMatchedReport() {
+        List<MatchedReport> list;
+        return list = matchRepository.getMatchedReport();
+    }
+
+
 }

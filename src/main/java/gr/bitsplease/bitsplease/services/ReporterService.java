@@ -1,5 +1,6 @@
 package gr.bitsplease.bitsplease.services;
 
+import gr.bitsplease.bitsplease.dto.MatchedReport;
 import gr.bitsplease.bitsplease.dto.ReportNotMatched;
 import gr.bitsplease.bitsplease.dto.Reporter;
 
@@ -9,5 +10,7 @@ public interface ReporterService {
     List<Reporter> getRequested();
     List<Reporter> getOffered();
     List<ReportNotMatched> getNotMatchedByApplicants();
+
+    List<MatchedReport> getMatchedReport();
 }
 

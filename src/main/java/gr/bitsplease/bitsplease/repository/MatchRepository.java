@@ -1,11 +1,15 @@
 package gr.bitsplease.bitsplease.repository;
+
+import gr.bitsplease.bitsplease.dto.MatchedReport;
 import gr.bitsplease.bitsplease.dto.SurveyAnswerStatistics;
 import gr.bitsplease.bitsplease.models.Match;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.UUID;
+
 @Repository
 public interface MatchRepository extends JpaRepository<Match, UUID> {
 
@@ -35,4 +39,14 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
     " ApplicantSkills.applicant_ApplicantId " )
 
     List<SurveyAnswerStatistics> findSurveyCount();
+
+    @Query(nativeQuery = true, value =
+            "SELECT "+
+                    "  ,status Status" +
+                    " ,typeOfMatching TypeOfMatching " +
+                    " ,applicant_ApplicantId ApplicantID" +
+                    "  ,jobOffer_jobOfferId JobOfferId " +
+                    "  FROM Match ")
+    List<MatchedReport> getMatchedReport();
+
 }

@@ -18,7 +18,6 @@ public class Applicant {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private int ApplicantId;
-    
     private String firstName;
     @Column(nullable=false)
     private String lastName;
@@ -30,8 +29,8 @@ public class Applicant {
     private String level;
     @Column(nullable=false)
     private String address;
-
     private String region;
+    private boolean active = true;
 
 
 

@@ -1,8 +1,6 @@
 package gr.bitsplease.bitsplease.dto;
+
 public interface SurveyAnswerStatistics {
-    int getJobOfferSkillsId();
-    int getAppId();
-
-
-
+        int getApp();
+        int getJob();
 }

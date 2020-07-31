@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -36,9 +37,11 @@ public class Skills {
 
     @OneToMany(mappedBy = "skills")
     @JsonIgnore
+    @ToString.Exclude
     private List<JobOfferSkills> jobOfferSkills;
 
     @OneToMany(mappedBy = "skills")
     @JsonIgnore
+    @ToString.Exclude
     private List<ApplicantSkills> applicantSkills;
 }

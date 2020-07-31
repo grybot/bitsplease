@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -19,11 +20,11 @@ import java.util.UUID;
 public class Match {
     @Id
     @GeneratedValue(generator = "UUID")
-    private UUID id;
-    private String typeOfMatching;
+    private UUID matchId;
+    private String typeOfMatching = "Automatic";
     private String status;
     private double percentage;
-    private boolean finalised;
+    private LocalDate finalisedDate;
 
     @ManyToOne
     @JsonIgnore

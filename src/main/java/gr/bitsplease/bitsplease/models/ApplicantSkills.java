@@ -26,4 +26,6 @@ public class ApplicantSkills {
     @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     private Skills skills;
+
+
 }

@@ -48,5 +48,3 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
                     "  ,jobOffer_jobOfferId JobOfferId " +
                     "  FROM Match ")
     List<MatchedReport> getMatchedReport();
-
-}

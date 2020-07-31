@@ -5,8 +5,6 @@ import gr.bitsplease.bitsplease.dto.ReportNotMatched;
 import gr.bitsplease.bitsplease.dto.Reporter;
 import gr.bitsplease.bitsplease.repository.ApplicantRepository;
 import gr.bitsplease.bitsplease.repository.JobOfferRepository;
-import gr.bitsplease.bitsplease.repository.JobOfferSkillsRepository;
-import gr.bitsplease.bitsplease.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

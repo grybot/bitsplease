@@ -15,7 +15,7 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Integer> {
     List<JobOffer> findByRegion(String region);
 
     @Query(nativeQuery =true, value=
-            " SELECT 		TOP(5)	 COUNT (skillsId) Freq , Skills.name Name " +
+            " SELECT 		TOP(20)	 COUNT (skillsId) Freq , Skills.name Name " +
                     " FROM JobOfferSkills INNER JOIN Skills ON JobOfferSkills.skills_skillsId= Skills.skillsId" +
                     " GROUP BY skills_skillsId,Skills.name ORDER BY Freq Desc")
 

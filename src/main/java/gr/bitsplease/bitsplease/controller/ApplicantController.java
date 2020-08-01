@@ -83,9 +83,7 @@ public class ApplicantController {
      * @return the string
      */
 
-            throws ApplicantNotFoundException {
-        return applicantService.getApplicantById(applicantId);
-    }
+
 
     @GetMapping("applicantFiltered")
     public List<Applicant> getApplicant(@RequestParam(required = false) String firstName

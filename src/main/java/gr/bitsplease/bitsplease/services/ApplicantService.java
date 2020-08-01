@@ -61,9 +61,8 @@ public interface ApplicantService {
             throws ApplicantException, SkillException;
 
     List<Applicant> getApplicant(String firstName,
-                                 String region, Integer skillId);
+                                 String region,String email, String address , Integer skillId);
 
-    List<Applicant> getApplicant(String firstName,
-                                     String region, Integer skillId);
+
 
 }

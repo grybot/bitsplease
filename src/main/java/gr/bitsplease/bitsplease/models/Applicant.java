@@ -29,6 +29,7 @@ public class Applicant {
     private String level;
     @Column(nullable=false)
     private String address;
+    private String email;
     private String region;
     private boolean active = true;
 

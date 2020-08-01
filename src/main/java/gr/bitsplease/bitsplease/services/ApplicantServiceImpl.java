@@ -1,7 +1,8 @@
 package gr.bitsplease.bitsplease.services;
 
 
-import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.ApplicantException;
+import gr.bitsplease.bitsplease.exceptions.SkillException;
 import gr.bitsplease.bitsplease.models.Applicant;
 import gr.bitsplease.bitsplease.models.ApplicantSkills;
 import gr.bitsplease.bitsplease.models.Skills;
@@ -94,11 +95,15 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public List<Applicant> getApplicant(String firstName, String region, Integer skillId) {
+    public List<Applicant> getApplicant(String firstName, String region,String email,String address, Integer skillId) {
         if (firstName != null)
             return applicantRepository.findByFirstName(firstName);
         if (region != null)
             return applicantRepository.findByRegion(region);
+        if (email!=null && email.contains("@"))
+            return applicantRepository.findByEmail(email);
+        if(address!=null)
+            return applicantRepository.findByAddress(address);
         if (skillId != 0) {
             List<Applicant> applicantList = applicantRepository.findAll();
             List<Applicant> applicantListMatched = new ArrayList<>();

@@ -1,6 +1,8 @@
 package gr.bitsplease.bitsplease.services;
 
-import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
+
+import gr.bitsplease.bitsplease.exceptions.JobOfferException;
+import gr.bitsplease.bitsplease.exceptions.SkillException;
 import gr.bitsplease.bitsplease.models.*;
 import gr.bitsplease.bitsplease.repository.JobOfferRepository;
 import gr.bitsplease.bitsplease.repository.JobOfferSkillsRepository;

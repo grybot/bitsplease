@@ -85,6 +85,8 @@ public class Helper {
                         applicant.setLevel(currentCell.getStringCellValue());
                         break;
 
+                    case 6:
+                        applicant.setEmail(currentCell.getStringCellValue());
                     default:
                         ApplicantSkills ab = new ApplicantSkills();
                         ab.setApplicant(applicant);

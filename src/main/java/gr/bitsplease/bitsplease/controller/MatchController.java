@@ -1,9 +1,9 @@
 package gr.bitsplease.bitsplease.controller;
 
 import gr.bitsplease.bitsplease.dto.SurveyAnswerStatistics;
-import gr.bitsplease.bitsplease.exceptions.ApplicantException;
-import gr.bitsplease.bitsplease.exceptions.JobOfferException;
-import gr.bitsplease.bitsplease.exceptions.MatchException;
+import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.JobOfferNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.MatchNotFoundException;
 import gr.bitsplease.bitsplease.models.Match;
 import gr.bitsplease.bitsplease.services.MatchService;
 import org.slf4j.Logger;
@@ -47,12 +47,12 @@ public class MatchController {
      * @param applicantId the applicant id
      * @param jobOfferId  the job offer id
      * @return match that is associated with applicantId and jobOfferId
-     * @throws MatchException     if match is not found by id
-     * @throws ApplicantException if applicant is not found by id
-     * @throws JobOfferException  if job offer is not found by id
+     * @throws MatchNotFoundException     if match is not found by id
+     * @throws ApplicantNotFoundException if applicant is not found by id
+     * @throws JobOfferNotFoundException  if job offer is not found by id
      */
     @PostMapping("match/{applicantId}/{jobOfferId}")
-    public Match manualMatch(@PathVariable int applicantId, @PathVariable int jobOfferId) throws MatchException, ApplicantException, JobOfferException {
+    public Match manualMatch(@PathVariable int applicantId, @PathVariable int jobOfferId) throws MatchNotFoundException, ApplicantNotFoundException, JobOfferNotFoundException {
         return matchService.manualMatch(applicantId, jobOfferId);
     }
 
@@ -61,10 +61,10 @@ public class MatchController {
      *
      * @param matchId the match id
      * @return match by id
-     * @throws MatchException if match is not found by id
+     * @throws MatchNotFoundException if match is not found by id
      */
     @GetMapping("match/{matchId}")
-    public Match getMatchById(@PathVariable UUID matchId) throws MatchException {
+    public Match getMatchById(@PathVariable UUID matchId) throws MatchNotFoundException {
         return matchService.getMatchById(matchId);
     }
 
@@ -73,10 +73,10 @@ public class MatchController {
      *
      * @param matchId the match id
      * @return if match was deleted(true or false)
-     * @throws MatchException if match is not found by id
+     * @throws MatchNotFoundException if match is not found by id
      */
     @DeleteMapping("match/{matchId}")
-    public boolean deleteMatch(@PathVariable UUID matchId) throws MatchException {
+    public boolean deleteMatch(@PathVariable UUID matchId) throws MatchNotFoundException {
         return matchService.deleteMatch(matchId);
     }
 
@@ -86,11 +86,11 @@ public class MatchController {
      * @param match   match
      * @param matchId matchId
      * @return updated match
-     * @throws MatchException if match is not found by id
+     * @throws MatchNotFoundException if match is not found by id
      */
     @PutMapping("match/{matchId}")
     public Match updateMatch(@RequestBody Match match,
-                             @PathVariable UUID matchId) throws MatchException {
+                             @PathVariable UUID matchId) throws MatchNotFoundException {
         return matchService.updateMatch(match, matchId);
     }
 
@@ -109,10 +109,10 @@ public class MatchController {
      *
      * @param matchId the match id
      * @return finalised match
-     * @throws MatchException if match is not found by id
+     * @throws MatchNotFoundException if match is not found by id
      */
     @GetMapping("match/finalised/{matchId}")
-    public Match getFinalisedMatch(@PathVariable UUID matchId) throws MatchException {
+    public Match getFinalisedMatch(@PathVariable UUID matchId) throws MatchNotFoundException {
         return matchService.getFinalisedMatch(matchId);
     }
 
@@ -121,10 +121,10 @@ public class MatchController {
      *
      * @param matchId match id
      * @return boolean(true if match exists and successfully deleted, if false error will be thrown) boolean
-     * @throws MatchException if match is not found by id
+     * @throws MatchNotFoundException if match is not found by id
      */
     @PutMapping("match/finalised/{matchId}")
-    public boolean finaliseMatch(@PathVariable UUID matchId) throws MatchException {
+    public boolean finaliseMatch(@PathVariable UUID matchId) throws MatchNotFoundException {
         return matchService.finaliseMatch(matchId);
     }
 
@@ -144,7 +144,7 @@ public class MatchController {
      * Creates matches.
      */
     @GetMapping("createMatch")
-    public void initialMatch() throws ApplicantException {
+    public void initialMatch() throws ApplicantNotFoundException {
         matchService.initialMatch();
     }
 
@@ -154,13 +154,13 @@ public class MatchController {
      * @param applicantId the applicant id
      * @param jobOfferId  the job offer id
      * @return match that is associated with both appID and jobID
-     * @throws MatchException     if there is no match that connects both appID and jobID
-     * @throws JobOfferException  if there is no jobOffer associated with the jobID
-     * @throws ApplicantException if there is not applicant associated with the appID
+     * @throws MatchNotFoundException     if there is no match that connects both appID and jobID
+     * @throws JobOfferNotFoundException  if there is no jobOffer associated with the jobID
+     * @throws ApplicantNotFoundException if there is not applicant associated with the appID
      */
     @GetMapping("match/{applicantId}/{jobOfferId}")
     public Optional<Match> getMatchByAppIDandJobID(@PathVariable int applicantId, @PathVariable int jobOfferId)
-            throws MatchException, JobOfferException, ApplicantException {
+            throws MatchNotFoundException, JobOfferNotFoundException, ApplicantNotFoundException {
         return matchService.getMatchByAppIDandJobID(applicantId, jobOfferId);
     }
 }

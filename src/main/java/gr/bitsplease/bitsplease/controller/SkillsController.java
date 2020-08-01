@@ -1,6 +1,6 @@
 package gr.bitsplease.bitsplease.controller;
 
-import gr.bitsplease.bitsplease.exceptions.SkillException;
+import gr.bitsplease.bitsplease.exceptions.SkillNotFoundException;
 import gr.bitsplease.bitsplease.models.Skills;
 import gr.bitsplease.bitsplease.services.ApplicantService;
 import gr.bitsplease.bitsplease.services.SkillService;
@@ -53,11 +53,11 @@ public class SkillsController {
      * @param skillId unique identifier of skill
      * @param skills  the skills
      * @return updated skill
-     * @throws SkillException the skill exception
+     * @throws SkillNotFoundException the skill exception
      */
     @PutMapping("skill/{skillId}")
     public Skills updateSkills(@PathVariable int skillId,
-                               @RequestBody Skills skills) throws SkillException {
+                               @RequestBody Skills skills) throws SkillNotFoundException {
         return skillService.updateSkills(skills, skillId);
     }
 
@@ -66,10 +66,10 @@ public class SkillsController {
      *
      * @param skillId unique identifier of skill
      * @return boolean(if skill was deleted)
-     * @throws SkillException if skill not found by id
+     * @throws SkillNotFoundException if skill not found by id
      */
     @DeleteMapping("skill/{skillIndex}")
-    public boolean deleteSkills(@PathVariable int skillId) throws SkillException {
+    public boolean deleteSkills(@PathVariable int skillId) throws SkillNotFoundException {
         return skillService.deleteSkills(skillId);
     }
 
@@ -78,10 +78,10 @@ public class SkillsController {
      *
      * @param skillId the skill id
      * @return the skill by id
-     * @throws SkillException if skill not found by id
+     * @throws SkillNotFoundException if skill not found by id
      */
     @GetMapping("skill/{skillId}")
-    public Skills getSkillById(@PathVariable int skillId) throws SkillException {
+    public Skills getSkillById(@PathVariable int skillId) throws SkillNotFoundException {
         return skillService.getSkillById(skillId);
     }
 }

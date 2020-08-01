@@ -1,9 +1,9 @@
 package gr.bitsplease.bitsplease.services;
 
 import gr.bitsplease.bitsplease.dto.SurveyAnswerStatistics;
-import gr.bitsplease.bitsplease.exceptions.ApplicantException;
-import gr.bitsplease.bitsplease.exceptions.JobOfferException;
-import gr.bitsplease.bitsplease.exceptions.MatchException;
+import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.JobOfferNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.MatchNotFoundException;
 import gr.bitsplease.bitsplease.models.ApplicantSkills;
 import gr.bitsplease.bitsplease.models.JobOfferSkills;
 import gr.bitsplease.bitsplease.models.Match;
@@ -22,9 +22,9 @@ public interface MatchService {
      *
      * @param matchId the match id
      * @return the match by id
-     * @throws MatchException if match is not found by id
+     * @throws MatchNotFoundException if match is not found by id
      */
-    Match getMatchById(UUID matchId) throws MatchException;
+    Match getMatchById(UUID matchId) throws MatchNotFoundException;
 
     /**
      * Manual match applicant with job offer.
@@ -32,20 +32,20 @@ public interface MatchService {
      * @param applicantId the applicant id
      * @param jobOfferId  the job offer id
      * @return new match
-     * @throws MatchException     if match is not found by id
-     * @throws JobOfferException  if job offer is not found by id
-     * @throws ApplicantException if applicant is not found by id
+     * @throws MatchNotFoundException     if match is not found by id
+     * @throws JobOfferNotFoundException  if job offer is not found by id
+     * @throws ApplicantNotFoundException if applicant is not found by id
      */
-    Match manualMatch(int applicantId, int jobOfferId) throws MatchException, JobOfferException, ApplicantException;
+    Match manualMatch(int applicantId, int jobOfferId) throws MatchNotFoundException, JobOfferNotFoundException, ApplicantNotFoundException;
 
     /**
      * Delete match.
      *
      * @param matchId the match id
      * @return boolean(true if match is deleted, false if not) boolean
-     * @throws MatchException if match is not found by id
+     * @throws MatchNotFoundException if match is not found by id
      */
-    boolean deleteMatch(UUID matchId) throws MatchException;
+    boolean deleteMatch(UUID matchId) throws MatchNotFoundException;
 
     /**
      * Update match.
@@ -53,9 +53,9 @@ public interface MatchService {
      * @param match   the match
      * @param matchId the match id
      * @return updated match
-     * @throws MatchException if match not found by id
+     * @throws MatchNotFoundException if match not found by id
      */
-    Match updateMatch(Match match, UUID matchId) throws MatchException;
+    Match updateMatch(Match match, UUID matchId) throws MatchNotFoundException;
 
     /**
      * Gets finalised matches.
@@ -69,18 +69,18 @@ public interface MatchService {
      *
      * @param matchId the match id
      * @return finalised match found by id
-     * @throws MatchException match is not found by id
+     * @throws MatchNotFoundException match is not found by id
      */
-    Match getFinalisedMatch(UUID matchId) throws MatchException;
+    Match getFinalisedMatch(UUID matchId) throws MatchNotFoundException;
 
     /**
      * Finalise match.
      *
      * @param matchId the match id
      * @return boolean(true if match was finalised, false if not boolean
-     * @throws MatchException match is not found by id
+     * @throws MatchNotFoundException match is not found by id
      */
-    boolean finaliseMatch(UUID matchId) throws MatchException;
+    boolean finaliseMatch(UUID matchId) throws MatchNotFoundException;
 
     /**
      * Gets matches.
@@ -92,16 +92,16 @@ public interface MatchService {
     /**
      * Initial match.
      */
-    void initialMatch() throws ApplicantException;
+    void initialMatch() throws ApplicantNotFoundException;
 
     /**
      * Create match.
      *
      * @param applicantId the applicant id
      * @param jobOfferId  the job offer id
-     * @throws ApplicantException if applicant is not found by id
+     * @throws ApplicantNotFoundException if applicant is not found by id
      */
-    void createMatch(int applicantId, int jobOfferId) throws ApplicantException;
+    void createMatch(int applicantId, int jobOfferId) throws ApplicantNotFoundException;
 
     /**
      * Partial percentage int.
@@ -136,9 +136,9 @@ public interface MatchService {
      * @param applicantId the applicant id
      * @param jobOfferId  the job offer id
      * @return the match by app i dand job id
-     * @throws ApplicantException the applicant exception
-     * @throws JobOfferException  the job offer exception
-     * @throws MatchException     the match exception
+     * @throws ApplicantNotFoundException the applicant exception
+     * @throws JobOfferNotFoundException  the job offer exception
+     * @throws MatchNotFoundException     the match exception
      */
-    Optional<Match> getMatchByAppIDandJobID(int applicantId, int jobOfferId) throws ApplicantException, JobOfferException, MatchException;
+    Optional<Match> getMatchByAppIDandJobID(int applicantId, int jobOfferId) throws ApplicantNotFoundException, JobOfferNotFoundException, MatchNotFoundException;
 }

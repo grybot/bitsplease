@@ -1,7 +1,7 @@
 package gr.bitsplease.bitsplease.services;
 
-import gr.bitsplease.bitsplease.exceptions.ApplicantException;
-import gr.bitsplease.bitsplease.exceptions.SkillException;
+import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.SkillNotFoundException;
 import gr.bitsplease.bitsplease.models.Applicant;
 import gr.bitsplease.bitsplease.models.ApplicantSkills;
 
@@ -24,9 +24,9 @@ public interface ApplicantService {
      *
      * @param applicantId the applicant id
      * @return applicant by id
-     * @throws ApplicantException if applicant not found by id
+     * @throws ApplicantNotFoundException if applicant not found by id
      */
-    Applicant getApplicantById(int applicantId) throws ApplicantException;
+    Applicant getApplicantById(int applicantId) throws ApplicantNotFoundException;
 
     /**
      * Add applicant.
@@ -34,7 +34,7 @@ public interface ApplicantService {
      * @param applicant the applicant
      * @return a new applicant
      */
-    Applicant addApplicant(Applicant applicant) throws ApplicantException;
+    Applicant addApplicant(Applicant applicant) throws ApplicantNotFoundException;
 
     /**
      * Update applicant by id.
@@ -47,11 +47,9 @@ public interface ApplicantService {
      * @param address the applicant address
      * @param region the applicant region
      * @return the applicant specified by ID
-     * @throws ApplicantException If applicant is not found by id
+     * @throws ApplicantNotFoundException If applicant is not found by id
      */
-   // Applicant updateApplicant(int applicantId, String firstName, String lastName, boolean active, String level, String address, String region) throws ApplicantException;
-
-    Applicant updateApplicant(int applicantId, String firstName, String lastName, boolean active, String level, String address, String region) throws ApplicantException;
+    Applicant updateApplicant(int applicantId, String firstName, String lastName, String email, boolean active, String level, String address, String region) throws ApplicantNotFoundException;
 
 
     /**
@@ -60,11 +58,11 @@ public interface ApplicantService {
      * @param applicantId the applicant id
      * @param skillId     the skill id
      * @return applicant with new skills
-     * @throws ApplicantException if applicant not found by id
-     * @throws SkillException    if skill not found by id
+     * @throws ApplicantNotFoundException if applicant not found by id
+     * @throws SkillNotFoundException    if skill not found by id
      */
     ApplicantSkills addSkillsToApplicant(int applicantId, int skillId)
-            throws ApplicantException, SkillException;
+            throws ApplicantNotFoundException, SkillNotFoundException;
 
     List<Applicant> getApplicant(String firstName,
                                  String region, Integer skillId);

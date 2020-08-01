@@ -1,7 +1,7 @@
 package gr.bitsplease.bitsplease.controller;
 
-import gr.bitsplease.bitsplease.exceptions.JobOfferException;
-import gr.bitsplease.bitsplease.exceptions.SkillException;
+import gr.bitsplease.bitsplease.exceptions.JobOfferNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.SkillNotFoundException;
 import gr.bitsplease.bitsplease.models.JobOffer;
 import gr.bitsplease.bitsplease.models.JobOfferSkills;
 import gr.bitsplease.bitsplease.services.JobOffersService;
@@ -52,12 +52,12 @@ public class JobOffersController {
      * @param jobOfferId the job offer id
      * @param skillId    the skill id
      * @return updated job offer (w/ a new skill)
-     * @throws SkillException    if skill is not found by id
-     * @throws JobOfferException if job offer is not found by id
+     * @throws SkillNotFoundException    if skill is not found by id
+     * @throws JobOfferNotFoundException if job offer is not found by id
      */
     @PostMapping("jobOffer/{jobOfferId}/{skillId}")
     public JobOfferSkills addSkillsToJobOffers(@PathVariable int jobOfferId,
-                                               @PathVariable int skillId) throws SkillException, JobOfferException {
+                                               @PathVariable int skillId) throws SkillNotFoundException, JobOfferNotFoundException {
         return jobOffersService.addSkillsToJobOffers(jobOfferId, skillId);
     }
 
@@ -66,10 +66,10 @@ public class JobOffersController {
      *
      * @param jobOfferId the job offer id
      * @return boolean(true if job offer exists and successfully deleted, if false error will be thrown)
-     * @throws JobOfferException if job offer is not found by id
+     * @throws JobOfferNotFoundException if job offer is not found by id
      */
     @DeleteMapping("JobOffer/{jobOfferId}")
-    public boolean deleteJobOffer(@PathVariable int jobOfferId) throws JobOfferException {
+    public boolean deleteJobOffer(@PathVariable int jobOfferId) throws JobOfferNotFoundException {
         return jobOffersService.deleteJobOffer(jobOfferId);
     }
 }

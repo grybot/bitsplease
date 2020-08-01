@@ -1,7 +1,7 @@
 package gr.bitsplease.bitsplease.controller;
 
-import gr.bitsplease.bitsplease.exceptions.ApplicantException;
-import gr.bitsplease.bitsplease.exceptions.SkillException;
+import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.SkillNotFoundException;
 import gr.bitsplease.bitsplease.models.Applicant;
 import gr.bitsplease.bitsplease.models.ApplicantSkills;
 import gr.bitsplease.bitsplease.services.ApplicantService;
@@ -41,7 +41,7 @@ public class ApplicantController {
      * @return new applicant
      */
     @PostMapping("applicant")
-    public Applicant addApplicant(@RequestBody Applicant applicant) throws ApplicantException {
+    public Applicant addApplicant(@RequestBody Applicant applicant) throws ApplicantNotFoundException {
         return applicantService.addApplicant(applicant);
     }
 
@@ -50,11 +50,11 @@ public class ApplicantController {
      *
      * @param applicantId the applicant id
      * @return the applicant specified by ID
-     * @throws ApplicantException If applicant is not found by id
+     * @throws ApplicantNotFoundException If applicant is not found by id
      */
     @GetMapping("applicant/{applicantId}")
     public Applicant getApplicantById(@PathVariable int applicantId)
-            throws ApplicantException {
+            throws ApplicantNotFoundException {
         return applicantService.getApplicantById(applicantId);
     }
     /**
@@ -68,15 +68,15 @@ public class ApplicantController {
      * @param address the applicant address
      * @param region the applicant region
      * @return the applicant specified by ID
-     * @throws ApplicantException If applicant is not found by id
+     * @throws ApplicantNotFoundException If applicant is not found by id
      */
-    @PatchMapping("applicant/{applicantId}/{firstName}/{lastName}/{active}/{level}/{address}/{region}")
+    @PatchMapping("applicant/{applicantId}/{firstName}/{lastName}/{active}/{level}/{email}/{address}/{region}")
     public Applicant updateApplicant(@PathVariable(required = true) int applicantId,
                                      @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName,
-                                     @RequestParam(required = false) boolean active, @RequestParam(required = false) String level,
+                                     @RequestParam(required = false) boolean active, @RequestParam(required = false) String level,@RequestParam(required = false) String email,
                                      @RequestParam(required = false) String address, @RequestParam(required = false) String region)
-            throws ApplicantException {
-        return applicantService.updateApplicant(applicantId, firstName, lastName, active, level, address, region);
+            throws ApplicantNotFoundException {
+        return applicantService.updateApplicant(applicantId, firstName, lastName, email, active, level, address,region);
     }
 
     /**
@@ -85,12 +85,12 @@ public class ApplicantController {
      * @param applicantId the applicant id
      * @param skillId     the skill id
      * @return applicant with updated skills
-     * @throws ApplicantException if applicant is not found by id
-     * @throws SkillException     if skill is not found by id
+     * @throws ApplicantNotFoundException if applicant is not found by id
+     * @throws SkillNotFoundException     if skill is not found by id
      */
     @PostMapping("skill/{applicantId}/{skillId}")
     public ApplicantSkills addSkillsToApplicant(@PathVariable int applicantId,
-                                                @PathVariable int skillId) throws ApplicantException, SkillException {
+                                                @PathVariable int skillId) throws ApplicantNotFoundException, SkillNotFoundException {
         return applicantService.addSkillsToApplicant(applicantId, skillId);
     }
 }

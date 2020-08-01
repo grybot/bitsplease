@@ -1,6 +1,6 @@
 package gr.bitsplease.bitsplease.services;
 
-import gr.bitsplease.bitsplease.exceptions.SkillException;
+import gr.bitsplease.bitsplease.exceptions.SkillNotFoundException;
 import gr.bitsplease.bitsplease.models.Skills;
 
 import java.util.List;
@@ -30,25 +30,25 @@ public interface SkillService {
       * @param skills  the skills
       * @param skillId the skill id
       * @return updated skill
-      * @throws SkillException skill is not found by id
+      * @throws SkillNotFoundException skill is not found by id
       */
-     Skills updateSkills(Skills skills, int skillId) throws SkillException;
+     Skills updateSkills(Skills skills, int skillId) throws SkillNotFoundException;
 
      /**
       * Delete skill.
       *
       * @param skillId the skill id
       * @return boolean (true if skill was deleted, false if not)
-      * @throws SkillException skill is not found by id
+      * @throws SkillNotFoundException skill is not found by id
       */
-     boolean deleteSkills(int skillId) throws SkillException;
+     boolean deleteSkills(int skillId) throws SkillNotFoundException;
 
      /**
       * Gets skill by id.
       *
       * @param skillsId the skills id
       * @return skill specified by id
-      * @throws SkillException if skill is not found by id
+      * @throws SkillNotFoundException if skill is not found by id
       */
-     Skills getSkillById(int skillsId) throws SkillException;
+     Skills getSkillById(int skillsId) throws SkillNotFoundException;
 }

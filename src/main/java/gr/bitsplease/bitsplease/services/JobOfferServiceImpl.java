@@ -1,7 +1,7 @@
 package gr.bitsplease.bitsplease.services;
 
-import gr.bitsplease.bitsplease.exceptions.JobOfferException;
-import gr.bitsplease.bitsplease.exceptions.SkillException;
+import gr.bitsplease.bitsplease.exceptions.JobOfferNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.SkillNotFoundException;
 import gr.bitsplease.bitsplease.models.JobOffer;
 import gr.bitsplease.bitsplease.models.JobOfferSkills;
 import gr.bitsplease.bitsplease.models.Skills;
@@ -37,13 +37,13 @@ public class JobOfferServiceImpl implements JobOffersService {
     }
 
     @Override
-    public JobOfferSkills addSkillsToJobOffers(int jobOfferId, int skillId) throws JobOfferException, SkillException {
+    public JobOfferSkills addSkillsToJobOffers(int jobOfferId, int skillId) throws JobOfferNotFoundException, SkillNotFoundException {
         Skills skills = skillsRepository
                 .findById(skillId)
-                .orElseThrow(() -> new SkillException("Could not find any skill with this ID."));
+                .orElseThrow(() -> new SkillNotFoundException("Could not find any skill with this ID."));
         JobOffer jobOffer = jobOfferRepository
                 .findById(jobOfferId)
-                .orElseThrow(() -> new JobOfferException("Could not find any job offer with this ID."));
+                .orElseThrow(() -> new JobOfferNotFoundException("Could not find any job offer with this ID."));
         Optional<JobOfferSkills> jobOfferSkillsOptional = jobOfferSkillsRepository
                 .findAll()
                 .stream()
@@ -64,10 +64,10 @@ public class JobOfferServiceImpl implements JobOffersService {
     }
 
     @Override
-    public boolean deleteJobOffer(int jobOfferId) throws JobOfferException {
+    public boolean deleteJobOffer(int jobOfferId) throws JobOfferNotFoundException {
         JobOffer jobOffer = jobOfferRepository
                 .findById(jobOfferId)
-                .orElseThrow(() -> new JobOfferException("This id is not associated with any job offer."));
+                .orElseThrow(() -> new JobOfferNotFoundException("This id is not associated with any job offer."));
         return true;
     }
 }

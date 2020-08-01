@@ -87,8 +87,8 @@ public class ApplicantController {
 
     @GetMapping("applicantFiltered")
     public List<Applicant> getApplicant(@RequestParam(required = false) String firstName
-            , @RequestParam(required = false) String region, @RequestParam(required = false) Integer skillId) {
-        return applicantService.getApplicant(firstName, region, skillId);
+            , @RequestParam(required = false) String region,@RequestParam(required = false) String email ,@RequestParam(required = false) String address,@RequestParam(required = false) Integer skillId) {
+        return applicantService.getApplicant(firstName, region,email , address, skillId);
 
     }
 }

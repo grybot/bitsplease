@@ -71,11 +71,13 @@ public class JobOfferServiceImpl implements JobOffersService {
     }
 
     @Override
-    public List<JobOffer> getJobOffer(String companyName, String region, Integer skillId) {
+    public List<JobOffer> getJobOffer(String companyName, String region, String dop, Integer skillId) {
         if (companyName != null)
             return jobOfferRepository.findByCompanyName(companyName);
         if (region != null)
             return jobOfferRepository.findByRegion(region);
+        if(dop != null)
+            return jobOfferRepository.findByDop(dop);
         if (skillId != 0) {
             List<JobOffer> jobOfferList = jobOfferRepository.findAll();
             List<JobOffer> jobOffersListMatched = new ArrayList<>();

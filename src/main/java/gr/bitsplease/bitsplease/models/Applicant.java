@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -31,6 +32,7 @@ public class Applicant {
     private String address;
     private String email;
     private String region;
+    private String dob;
     private boolean active = true;
 
 

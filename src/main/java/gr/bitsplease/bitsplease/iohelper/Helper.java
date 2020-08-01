@@ -87,6 +87,8 @@ public class Helper {
 
                     case 6:
                         applicant.setEmail(currentCell.getStringCellValue());
+                    case 7:
+                        applicant.setDob(currentCell.getStringCellValue());
                     default:
                         ApplicantSkills ab = new ApplicantSkills();
                         ab.setApplicant(applicant);
@@ -204,6 +206,8 @@ public class Helper {
                         case 3:
                             jobOffer.setEdLevel((String) currentCell.getStringCellValue());
                             break;
+                        case 4:
+                            jobOffer.setDop(currentCell.getStringCellValue());
                         default:
                             JobOfferSkills jo = new JobOfferSkills();
                             jo.setJobOffer(jobOffer);

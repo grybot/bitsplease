@@ -21,22 +21,22 @@ public class ReporterServiceImpl implements ReporterService {
 
 
     @Override
-    public List<Reporter> getOffered() {
+    public List<OfferedRequestedReport> getOffered() {
 
-        List<Reporter> list;
+        List<OfferedRequestedReport> list;
         return list = applicantRepository.findOffered();
     }
 
     @Override
-    public List<Reporter> getRequested() {
-        List<Reporter> list;
-        return list =jobOfferRepository.findRequested();
+    public List<OfferedRequestedReport> getRequested() {
+        List<OfferedRequestedReport> list;
+        return list = jobOfferRepository.findRequested();
     }
 
     @Override
     public List<ReportNotMatched> getNotMatchedByApplicants() {
         List<ReportNotMatched> list;
-        return list =jobOfferRepository.getNotMatchedByApplicant();
+        return list = jobOfferRepository.getNotMatchedByApplicant();
     }
 
     @Override

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,8 +88,9 @@ public class ApplicantController {
 
     @GetMapping("applicantFiltered")
     public List<Applicant> getApplicant(@RequestParam(required = false) String firstName
-            , @RequestParam(required = false) String region,@RequestParam(required = false) String email ,@RequestParam(required = false) String address,@RequestParam(required = false) Integer skillId) {
-        return applicantService.getApplicant(firstName, region,email , address, skillId);
+            , @RequestParam(required = false) String region, @RequestParam(required = false) String email
+            , @RequestParam(required = false) String address, @RequestParam(required = false) String dob, @RequestParam(required = false) Integer skillId) {
+        return applicantService.getApplicant(firstName, region,email , address,dob, skillId);
 
     }
 }

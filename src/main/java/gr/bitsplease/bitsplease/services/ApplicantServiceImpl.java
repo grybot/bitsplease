@@ -95,15 +95,18 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public List<Applicant> getApplicant(String firstName, String region,String email,String address, Integer skillId) {
+    public List<Applicant> getApplicant(String firstName, String region, String email, String address,
+                                        String dob, Integer skillId) {
         if (firstName != null)
             return applicantRepository.findByFirstName(firstName);
         if (region != null)
             return applicantRepository.findByRegion(region);
-        if (email!=null && email.contains("@"))
+        if (email != null && email.contains("@"))
             return applicantRepository.findByEmail(email);
-        if(address!=null)
+        if (address != null)
             return applicantRepository.findByAddress(address);
+        if (dob != null)
+            return applicantRepository.findByDob(dob);
         if (skillId != 0) {
             List<Applicant> applicantList = applicantRepository.findAll();
             List<Applicant> applicantListMatched = new ArrayList<>();

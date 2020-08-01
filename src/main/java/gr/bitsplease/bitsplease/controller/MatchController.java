@@ -88,7 +88,7 @@ public class MatchController {
      * @throws MatchException if match is not found by id
      */
     @PutMapping("match/{matchId}")
-    public Match updateMatch(@RequestBody  Match match,
+    public Match updateMatch(@RequestBody Match match,
                              @PathVariable UUID matchId) throws MatchException {
         return matchService.updateMatch(match, matchId);
     }
@@ -99,7 +99,7 @@ public class MatchController {
      * @return list of finalised matches
      */
     @GetMapping("match/finalised")
-    public List<Match> getFinalisedMatches(){
+    public List<Match> getFinalisedMatches() {
         return matchService.getFinalisedMatches();
     }
 
@@ -126,10 +126,12 @@ public class MatchController {
     public boolean finaliseMatch(@PathVariable UUID matchId) throws MatchException {
         return matchService.finaliseMatch(matchId);
     }
+
     @GetMapping("matcher/{type}/{percentage}")
-    public List<SurveyAnswerStatistics> returnMatching(@PathVariable String type,@PathVariable int percentage){
-        return  matchService.returnMatching(type,percentage);
+    public List<SurveyAnswerStatistics> returnMatching(@PathVariable String type, @PathVariable int percentage) {
+        return matchService.returnMatching(type, percentage);
     }
+
     @GetMapping("createMatch")
     public void initialMatch() throws ApplicantException {
         matchService.initialMatch();

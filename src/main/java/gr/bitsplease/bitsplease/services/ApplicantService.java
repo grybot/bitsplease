@@ -5,9 +5,7 @@ import gr.bitsplease.bitsplease.exceptions.SkillException;
 import gr.bitsplease.bitsplease.models.Applicant;
 import gr.bitsplease.bitsplease.models.ApplicantSkills;
 
-import javax.persistence.Column;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The interface Applicant service.
@@ -61,7 +59,7 @@ public interface ApplicantService {
             throws ApplicantException, SkillException;
 
     List<Applicant> getApplicant(String firstName,
-                                 String region,String email, String address , Integer skillId);
+                                 String region, String email, String address, String dob, Integer skillId);
 
 
 

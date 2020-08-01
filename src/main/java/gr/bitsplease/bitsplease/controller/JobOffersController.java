@@ -3,12 +3,8 @@ package gr.bitsplease.bitsplease.controller;
 import gr.bitsplease.bitsplease.exceptions.ApplicantException;
 import gr.bitsplease.bitsplease.exceptions.JobOfferException;
 import gr.bitsplease.bitsplease.exceptions.SkillException;
-//import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
-import gr.bitsplease.bitsplease.models.Applicant;
-import gr.bitsplease.bitsplease.models.ApplicantSkills;
 import gr.bitsplease.bitsplease.models.JobOffer;
 import gr.bitsplease.bitsplease.models.JobOfferSkills;
-import gr.bitsplease.bitsplease.repository.JobOfferRepository;
 import gr.bitsplease.bitsplease.services.JobOffersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+//import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
 
 /**
  * The type Job offers controller.
@@ -63,20 +61,22 @@ public class JobOffersController {
 
     @GetMapping("jobOfferFiltered")
     public List<JobOffer> getJobOffer(@RequestParam(required = false) String companyName
-            , @RequestParam(required = false) String region, @RequestParam(required = false) Integer skillId) {
-        return jobOffersService.getJobOffer(companyName, region, skillId);
+            , @RequestParam(required = false) String region,
+                                      @RequestParam(required = false) String dop, @RequestParam(required = false) Integer skillId) {
+        return jobOffersService.getJobOffer(companyName, region, dop, skillId);
     }
-        /**
-         * Delete job offer.
-         *
-         * @param jobOfferId the job offer id
-         * @return boolean(true if job offer exists and successfully deleted, if false error will be thrown)
-         * @throws JobOfferException if job offer is not found by id
-         */
-        @DeleteMapping("JobOffer/{jobOfferId}")
-        public boolean deleteJobOffer ( @PathVariable int jobOfferId) throws JobOfferException {
-            return jobOffersService.deleteJobOffer(jobOfferId);
-        }
+
+    /**
+     * Delete job offer.
+     *
+     * @param jobOfferId the job offer id
+     * @return boolean(true if job offer exists and successfully deleted, if false error will be thrown)
+     * @throws JobOfferException if job offer is not found by id
+     */
+    @DeleteMapping("JobOffer/{jobOfferId}")
+    public boolean deleteJobOffer(@PathVariable int jobOfferId) throws JobOfferException {
+        return jobOffersService.deleteJobOffer(jobOfferId);
     }
+}
 
 

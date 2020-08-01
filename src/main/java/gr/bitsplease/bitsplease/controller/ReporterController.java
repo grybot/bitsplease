@@ -1,8 +1,6 @@
 package gr.bitsplease.bitsplease.controller;
 
 import gr.bitsplease.bitsplease.dto.*;
-import gr.bitsplease.bitsplease.models.Skills;
-import gr.bitsplease.bitsplease.services.ReporterService;
 import gr.bitsplease.bitsplease.services.ReporterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +20,7 @@ public class ReporterController {
      * @return most offered skills from applicants
      */
     @GetMapping("mostOffered")
-    public List<Reporter> getOffered() {
+    public List<OfferedRequestedReport> getOffered() {
         return reporterServiceImpl.getOffered();
     }
 
@@ -32,7 +30,7 @@ public class ReporterController {
      * @return the most requested skills from job offers
      */
     @GetMapping("mostRequested")
-    public List<Reporter> getRequested() {
+    public List<OfferedRequestedReport> getRequested() {
         return reporterServiceImpl.getRequested();
     }
 

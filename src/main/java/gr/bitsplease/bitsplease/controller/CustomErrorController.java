@@ -1,7 +1,10 @@
 package gr.bitsplease.bitsplease.controller;
 
 
-import gr.bitsplease.bitsplease.exceptions.*;
+import gr.bitsplease.bitsplease.exceptions.ApplicantException;
+import gr.bitsplease.bitsplease.exceptions.JobOfferException;
+import gr.bitsplease.bitsplease.exceptions.MatchException;
+import gr.bitsplease.bitsplease.exceptions.SkillException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+
 /**
  * The type Custom error controller.
  */
@@ -35,14 +39,22 @@ public class CustomErrorController
         Exception exception = (Exception) request.getAttribute("javax.servlet.error.exception");
 
 
-        if (exception instanceof ApplicantException){return exception.getMessage();}
-        if (exception instanceof JobOfferException){return exception.getMessage();}
-        if (exception instanceof MatchException){return exception.getMessage();}
-        if (exception instanceof SkillException){return exception.getMessage();}
+        if (exception instanceof ApplicantException) {
+            return exception.getMessage();
+        }
+        if (exception instanceof JobOfferException) {
+            return exception.getMessage();
+        }
+        if (exception instanceof MatchException) {
+            return exception.getMessage();
+        }
+        if (exception instanceof SkillException) {
+            return exception.getMessage();
+        }
 
         return String.format("<html><body><h2>Error Page</h2><div>Status code: <b>%s</b></div>"
                         + "<div>Exception Message: <b>%s</b></div><body></html>",
-                statusCode, exception==null? "N/A": exception.getMessage());
+                statusCode, exception == null ? "N/A" : exception.getMessage());
     }
 
     @Override

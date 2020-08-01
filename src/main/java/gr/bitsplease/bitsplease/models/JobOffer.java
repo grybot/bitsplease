@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -27,6 +28,7 @@ public class JobOffer {
     private String edLevel;
     @Column(nullable=false)
     private String region;
+    private String dop;
     private boolean fulfilled = false;
 
     @OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL)

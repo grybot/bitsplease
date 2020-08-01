@@ -1,7 +1,6 @@
 package gr.bitsplease.bitsplease.repository;
 
-import gr.bitsplease.bitsplease.dto.Reporter;
-import gr.bitsplease.bitsplease.dto.SurveyAnswerStatistics;
+import gr.bitsplease.bitsplease.dto.OfferedRequestedReport;
 import gr.bitsplease.bitsplease.models.Applicant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,10 +18,12 @@ public interface ApplicantRepository extends JpaRepository<Applicant, Integer> {
 
     List<Applicant>  findByAddress(String address);
 
+    List<Applicant> findByDob(String dob);
+
 
     @Query(nativeQuery = true, value =
-            " SELECT 		TOP(20)	 COUNT (skillsId) Freq , Skills.name Name " +
+            " SELECT  TOP(20)	 COUNT (skillsId) Freq , Skills.name Name " +
                     " FROM ApplicantSkills INNER JOIN Skills ON ApplicantSkills.skills_skillsId= Skills.skillsId" +
                     " GROUP BY skills_skillsId,Skills.name ORDER BY Freq Desc")
-    List<Reporter> findOffered();
+    List<OfferedRequestedReport> findOffered();
 }

@@ -12,7 +12,7 @@ public interface ReporterService {
      *
      * @return list of most offered skills by applicants.
      */
-    List<Reporter> getRequested();
+    List<OfferedRequestedReport> getRequested();
 
 
     /**
@@ -21,7 +21,7 @@ public interface ReporterService {
      * @return list of the most requested skills by the job offers
      */
 
-    List<Reporter> getOffered();
+    List<OfferedRequestedReport> getOffered();
 
     /**
      * Method for the skills that not applicant matched.

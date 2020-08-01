@@ -1,10 +1,7 @@
 package gr.bitsplease.bitsplease.services;
 
-import gr.bitsplease.bitsplease.exceptions.ApplicantException;
 import gr.bitsplease.bitsplease.exceptions.JobOfferException;
 import gr.bitsplease.bitsplease.exceptions.SkillException;
-import gr.bitsplease.bitsplease.models.Applicant;
-import gr.bitsplease.bitsplease.models.ApplicantSkills;
 import gr.bitsplease.bitsplease.models.JobOffer;
 import gr.bitsplease.bitsplease.models.JobOfferSkills;
 
@@ -45,5 +42,5 @@ public interface JobOffersService {
     boolean deleteJobOffer(int jobOfferId) throws JobOfferException;
 
     List<JobOffer> getJobOffer(String companyName,
-                                 String region, Integer skillId);
+                               String region, String dop , Integer skillId);
 }

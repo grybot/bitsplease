@@ -1,6 +1,6 @@
 package gr.bitsplease.bitsplease.dto;
 
-public interface Reporter {
+public interface OfferedRequestedReport {
     int getFreq();
     String getName();
 

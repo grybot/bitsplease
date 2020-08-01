@@ -22,17 +22,17 @@ public interface SkillService {
       * @param skills the skills
       * @return new skill
       */
-     Skills addSkills(Skills skills);
+     Skills addSkills(Skills skills) throws SkillException;
 
      /**
       * Update skill.
       *
-      * @param skills  the skills
+      * @param name name of the skills
       * @param skillId the skill id
       * @return updated skill
       * @throws SkillException skill is not found by id
       */
-     Skills updateSkills(Skills skills, int skillId) throws SkillException;
+     Skills updateSkills(int skillId,  String name) throws SkillException;
 
      /**
       * Delete skill.

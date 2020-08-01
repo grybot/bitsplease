@@ -36,6 +36,7 @@ public interface ApplicantService {
      */
     Applicant addApplicant(Applicant applicant) throws ApplicantException;
 
+
     /**
      * Update applicant by id.
      *
@@ -49,10 +50,8 @@ public interface ApplicantService {
      * @return the applicant specified by ID
      * @throws ApplicantException If applicant is not found by id
      */
-   // Applicant updateApplicant(int applicantId, String firstName, String lastName, boolean active, String level, String address, String region) throws ApplicantException;
-
-    Applicant updateApplicant(int applicantId, String firstName, String lastName, boolean active, String level, String address, String region) throws ApplicantException;
-
+    Applicant updateApplicant(int applicantId, String firstName, String lastName, String email,
+                              boolean active, String level, String address, String region) throws ApplicantException;
 
     /**
      * Add skills to applicant.

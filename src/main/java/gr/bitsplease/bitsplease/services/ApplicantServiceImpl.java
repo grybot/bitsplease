@@ -57,33 +57,21 @@ public class ApplicantServiceImpl implements ApplicantService {
         return applicantRepository.save(applicant);
     }
 
-//    @Override
-//    public Applicant updateApplicant(int applicantId, String firstName, String lastName, boolean active, String level, String address, String region) throws ApplicantException {
-//        Applicant applicantInDB = applicantRepository
-//                .findById(applicantId)
-//                .orElseThrow(() -> new ApplicantException("Could not find any applicant with this ID."));
-//        applicantInDB.setFirstName(firstName);
-//        applicantInDB.setLastName(lastName);
-//        applicantInDB.setActive(active);
-//        applicantInDB.setAddress(address);
-//        applicantInDB.setRegion(region);
-//        applicantInDB.setLevel(level);
-//        applicantRepository.save(applicantInDB);
-//        return applicantInDB;
-//    }
-
     @Override
-    public Applicant updateApplicant(int applicantId, String firstName, String lastName, boolean active, String level, String address, String region) throws ApplicantException {
+    public Applicant updateApplicant(int applicantId, String firstName, String lastName, String email, boolean active, String level, String address, String region) throws ApplicantException {
         Applicant applicantInDB = applicantRepository
                 .findById(applicantId)
                 .orElseThrow(() -> new ApplicantException("Could not find any applicant with this ID."));
         if (firstName == null) applicantInDB.setFirstName(applicantInDB.getFirstName()); else applicantInDB.setFirstName(firstName);
-        applicantInDB.setLastName(lastName);
-        applicantInDB.setAddress(address);
-        applicantInDB.setRegion(region);
+        if (lastName == null) applicantInDB.setLastName(applicantInDB.getLastName()); else applicantInDB.setLastName(lastName);
+        if (email == null) applicantInDB.setEmail(applicantInDB.getEmail()); else applicantInDB.setEmail(email);
+        if (address == null) applicantInDB.setAddress(applicantInDB.getAddress()); else applicantInDB.setAddress(address);
+        if (region == null) applicantInDB.setRegion(applicantInDB.getRegion()); else applicantInDB.setRegion(region);
+        if (active) applicantInDB.setActive(true); else applicantInDB.setActive(false);
         applicantRepository.save(applicantInDB);
         return applicantInDB;
     }
+
 
     @Override
     public ApplicantSkills addSkillsToApplicant(int applicantId, int skillId) throws ApplicantException, SkillException {

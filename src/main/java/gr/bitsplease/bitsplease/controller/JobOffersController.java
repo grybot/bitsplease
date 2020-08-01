@@ -42,7 +42,7 @@ public class JobOffersController {
      * @return new job order
      */
     @PostMapping("JobOffer")
-    public JobOffer addJobOffer(@RequestBody JobOffer jobOffer) {
+    public JobOffer addJobOffer(@RequestBody JobOffer jobOffer) throws JobOfferException {
         return jobOffersService.addJobOffer(jobOffer);
     }
 

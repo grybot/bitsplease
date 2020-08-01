@@ -43,7 +43,7 @@ public class SkillsController {
      * @return a new skill
      */
     @PostMapping("skills")
-    public Skills addSkills(@RequestBody Skills skills) {
+    public Skills addSkills(@RequestBody Skills skills) throws SkillException {
         return skillService.addSkills(skills);
     }
 
@@ -51,15 +51,21 @@ public class SkillsController {
      * Update skill.
      *
      * @param skillId unique identifier of skill
-     * @param skills  the skills
+     * @param name the name of the skill
      * @return updated skill
      * @throws SkillException the skill exception
      */
-    @PutMapping("skill/{skillId}")
-    public Skills updateSkills(@PathVariable int skillId,
-                               @RequestBody Skills skills) throws SkillException {
-        return skillService.updateSkills(skills, skillId);
+
+
+
+    @PatchMapping("skill/{skillId}/{name}")
+
+    public Skills updateSkills(@PathVariable(required = true) int skillId,
+                                     @RequestParam(required = false) String name)
+            throws SkillException {
+        return skillService.updateSkills(skillId,name);
     }
+
 
     /**
      * Delete skill.

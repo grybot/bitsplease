@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -17,8 +18,11 @@ import java.util.List;
 public class JobOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private int jobOfferId;
+    @NotNull
     private String companyName;
+    @NotNull
     private String titleOfPosition;
     private String edLevel;
     private String region;

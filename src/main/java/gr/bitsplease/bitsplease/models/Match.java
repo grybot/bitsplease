@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class Match {
     @Id
     @GeneratedValue(generator = "UUID")
+    @NotNull
     private UUID matchId;
     private String typeOfMatching = "Automatic";
     private String status;

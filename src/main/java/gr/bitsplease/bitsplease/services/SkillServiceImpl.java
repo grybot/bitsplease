@@ -1,5 +1,6 @@
 package gr.bitsplease.bitsplease.services;
 
+import gr.bitsplease.bitsplease.exceptions.ApplicantException;
 import gr.bitsplease.bitsplease.exceptions.SkillException;
 import gr.bitsplease.bitsplease.models.Skills;
 import gr.bitsplease.bitsplease.repository.ApplicantSkillsRepository;
@@ -28,17 +29,22 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public Skills addSkills(Skills skills) {
+    public Skills addSkills(Skills skills) throws SkillException {
+        if (skills == null)
+            throw new SkillException("Null Skill");
 
         return skillsRepository.save(skills);
     }
 
+
+
     @Override
-    public Skills updateSkills(Skills skills, int skillId) throws SkillException {
+    public Skills updateSkills(int skillId,  String name) throws SkillException {
         Skills skillinDB = skillsRepository
                 .findById(skillId)
                 .orElseThrow(() -> new SkillException("Skill Not Found."));
-        skillinDB.setName(skills.getName());
+        if (name == null) skillinDB.setName(skillinDB.getName()); else skillinDB.setName(name);
+
         skillsRepository.save(skillinDB);
         return skillinDB;
     }

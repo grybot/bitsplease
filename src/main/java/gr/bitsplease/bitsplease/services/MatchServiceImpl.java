@@ -33,7 +33,6 @@ public class MatchServiceImpl implements MatchService {
     private SkillsRepository skillsRepository;
     @Autowired
     private MatchRepository matchRepository;
-
     @Autowired
     private JobOffersService jobOffersService;
     @Autowired
@@ -155,8 +154,6 @@ public class MatchServiceImpl implements MatchService {
             jobOfferSkillsList = jobOffer.getJobOfferSkills();
         }
         requiredSkills = jobOfferSkillsList.size();
-        System.out.println("jobid" + jobOfferId);
-        System.out.println("first req skills" + requiredSkills);
         matches = getMatches(jobOfferSkillsList, applicantSkillsList);
         Match match = new Match();
         Applicant applicant = applicantOptional.get();

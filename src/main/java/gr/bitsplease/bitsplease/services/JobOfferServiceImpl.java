@@ -1,5 +1,6 @@
 package gr.bitsplease.bitsplease.services;
 
+import gr.bitsplease.bitsplease.exceptions.ApplicantException;
 import gr.bitsplease.bitsplease.exceptions.JobOfferException;
 import gr.bitsplease.bitsplease.exceptions.SkillException;
 import gr.bitsplease.bitsplease.models.JobOffer;
@@ -32,7 +33,11 @@ public class JobOfferServiceImpl implements JobOffersService {
     }
 
     @Override
-    public JobOffer addJobOffer(JobOffer jobOffer) {
+    public JobOffer addJobOffer(JobOffer jobOffer) throws JobOfferException {
+
+        if (jobOffer == null)
+            throw new JobOfferException("Null Job Offer");
+
         return jobOfferRepository.save(jobOffer);
     }
 

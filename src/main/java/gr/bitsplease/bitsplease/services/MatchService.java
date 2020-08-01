@@ -58,7 +58,7 @@ public interface MatchService {
     Match updateMatch(Match match, UUID matchId) throws MatchException;
 
     /**
-     * Gets finalised matches.
+     * Gets all finalised matches.
      *
      * @return list of finalised matches
      */
@@ -74,7 +74,7 @@ public interface MatchService {
     Match getFinalisedMatch(UUID matchId) throws MatchException;
 
     /**
-     * Finalise match.
+     * Finalise a match.
      *
      * @param matchId the match id
      * @return boolean(true if match was finalised, false if not boolean
@@ -95,7 +95,7 @@ public interface MatchService {
     void initialMatch() throws ApplicantException;
 
     /**
-     * Create match.
+     * Create the matches.
      *
      * @param applicantId the applicant id
      * @param jobOfferId  the job offer id
@@ -104,7 +104,7 @@ public interface MatchService {
     void createMatch(int applicantId, int jobOfferId) throws ApplicantException;
 
     /**
-     * Partial percentage int.
+     * Calculate the percentage of match.
      *
      * @param matches        the matches
      * @param requiredSkills the required skills
@@ -113,7 +113,7 @@ public interface MatchService {
     int partialPercentage(int matches, int requiredSkills);
 
     /**
-     * Gets matches.
+     * Gets all matches.
      *
      * @param jobOfferSkillsList  the job offer skills list
      * @param applicantSkillsList the applicant skills list
@@ -131,7 +131,7 @@ public interface MatchService {
     List<SurveyAnswerStatistics> returnMatching(String type, int percentage);
 
     /**
-     * Gets match by app i dand job id.
+     * Get matches by applicant ID and the job ID.
      *
      * @param applicantId the applicant id
      * @param jobOfferId  the job offer id

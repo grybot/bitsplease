@@ -70,13 +70,13 @@ public class ApplicantController {
      * @return the applicant specified by ID
      * @throws ApplicantException If applicant is not found by id
      */
-    @PatchMapping("applicant/{applicantId}/{firstName}/{lastName}/{active}/{level}/{address}/{region}")
+    @PatchMapping("applicant/{applicantId}/{firstName}/{lastName}/{active}/{level}/{email}/{address}/{region}")
     public Applicant updateApplicant(@PathVariable(required = true) int applicantId,
                                      @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName,
-                                     @RequestParam(required = false) boolean active, @RequestParam(required = false) String level,
+                                     @RequestParam(required = false) boolean active, @RequestParam(required = false) String level,@RequestParam(required = false) String email,
                                      @RequestParam(required = false) String address, @RequestParam(required = false) String region)
             throws ApplicantException {
-        return applicantService.updateApplicant(applicantId, firstName, lastName, active, level, address, region);
+        return applicantService.updateApplicant(applicantId, firstName, lastName, email, active, level, address,region);
     }
 
     /**

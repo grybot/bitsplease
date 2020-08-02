@@ -26,7 +26,7 @@ public interface JobOffersService {
      * @param jobOffer job offer
      * @return new job offer
      */
-    JobOffer addJobOffer(JobOffer jobOffer);
+    JobOffer addJobOffer(JobOffer jobOffer) throws JobOfferNotFoundException;
 
     /**
      * Add skills to job offer.

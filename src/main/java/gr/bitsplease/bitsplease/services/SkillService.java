@@ -27,14 +27,14 @@ public interface SkillService {
      /**
       * Update skill.
       *
-      * @param skills  the skills
       * @param skillId the skill id
       * @return updated skill
       * @throws SkillNotFoundException skill is not found by id
       */
-     Skills updateSkills(Skills skills, int skillId) throws SkillNotFoundException;
 
-     /**
+    Skills updateSkills(int skillId, String name) throws SkillNotFoundException;
+
+    /**
       * Delete skill.
       *
       * @param skillId the skill id

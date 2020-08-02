@@ -47,18 +47,11 @@ public class SkillsController {
         return skillService.addSkills(skills);
     }
 
-    /**
-     * Update skill.
-     *
-     * @param skillId unique identifier of skill
-     * @param skills  the skills
-     * @return updated skill
-     * @throws SkillNotFoundException the skill exception
-     */
-    @PutMapping("skill/{skillId}")
-    public Skills updateSkills(@PathVariable int skillId,
-                               @RequestBody Skills skills) throws SkillNotFoundException {
-        return skillService.updateSkills(skills, skillId);
+    @PatchMapping("skill/{skillId}/{name}")
+    public Skills updateSkills(@PathVariable(required = true) int skillId,
+                               @RequestParam(required = false) String name)
+            throws SkillNotFoundException {
+        return skillService.updateSkills(skillId,name);
     }
 
     /**

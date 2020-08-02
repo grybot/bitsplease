@@ -91,7 +91,7 @@ public class ApplicantServiceImpl implements ApplicantService {
     public ApplicantSkills addSkillsToApplicant(int applicantId, int skillId) throws ApplicantNotFoundException, SkillNotFoundException {
         Skills skills = skillsRepository
                 .findById(skillId)
-                .orElseThrow(() -> new SkillNotFoundException("Could not find any skill with this ID. "));
+                .orElseThrow(() -> new SkillNotFoundException("Could not find any skill with this ID."));
         Applicant applicant = applicantRepository
                 .findById(applicantId)
                 .orElseThrow(() -> new ApplicantNotFoundException("Could not find any applicant with this ID."));

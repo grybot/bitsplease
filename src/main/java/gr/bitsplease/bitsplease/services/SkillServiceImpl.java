@@ -34,11 +34,11 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public Skills updateSkills(Skills skills, int skillId) throws SkillNotFoundException {
+    public Skills updateSkills(int skillId,  String name) throws SkillNotFoundException {
         Skills skillinDB = skillsRepository
                 .findById(skillId)
                 .orElseThrow(() -> new SkillNotFoundException("Skill Not Found."));
-        skillinDB.setName(skills.getName());
+        if (name == null) skillinDB.setName(skillinDB.getName()); else skillinDB.setName(name);
         skillsRepository.save(skillinDB);
         return skillinDB;
     }

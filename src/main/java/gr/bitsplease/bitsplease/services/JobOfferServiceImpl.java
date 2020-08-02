@@ -32,7 +32,9 @@ public class JobOfferServiceImpl implements JobOffersService {
     }
 
     @Override
-    public JobOffer addJobOffer(JobOffer jobOffer) {
+    public JobOffer addJobOffer(JobOffer jobOffer) throws JobOfferNotFoundException {
+        if (jobOffer == null)
+            throw new JobOfferNotFoundException("Null Job Offer");
         return jobOfferRepository.save(jobOffer);
     }
 
@@ -70,4 +72,5 @@ public class JobOfferServiceImpl implements JobOffersService {
                 .orElseThrow(() -> new JobOfferNotFoundException("This id is not associated with any job offer."));
         return true;
     }
+
 }

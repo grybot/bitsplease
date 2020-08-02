@@ -1,7 +1,6 @@
 package gr.bitsplease.bitsplease.services;
 
 import gr.bitsplease.bitsplease.exceptions.SkillException;
-import gr.bitsplease.bitsplease.models.Applicant;
 import gr.bitsplease.bitsplease.models.Skills;
 import gr.bitsplease.bitsplease.repository.SkillsRepository;
 import org.junit.jupiter.api.Assertions;
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -54,23 +52,20 @@ class SkillServiceImplTest {
 
     }
 
-//    @Test
-//    void updateSkills() throws SkillException  {
-//        Skills skillTest = new Skills();
-//        skillTest.setSkillsId(1);
-//        skillTest.setName("Data Bases");
-//        when(skillsRepository.findById(1)).thenReturn(Optional.of(skillTest));
-//        Skills skillTest2 = skillService.updateSkills(skillTest.getSkillsId(), skillTest.getName());
-//
-//        assertTrue(skillTest2.getName().compareTo(skillTest.getName()));
-//
-//
-//        Skills skillTest3 = null;
-//        Assertions.assertThrows(SkillException.class, () -> {
-//            skillService.addSkills(skillTest3);
-//        });
-//
-//    }
+    @Test
+    void updateSkills() throws SkillException  {
+        Skills skillTest = new Skills();
+        skillTest.setSkillsId(1);
+        skillTest.setName("Data Bases");
+        when(skillsRepository.findById(1)).thenReturn(Optional.of(skillTest));
+        Skills skillTest2 = skillService.updateSkills(skillTest.getSkillsId(), skillTest.getName());
+        assertTrue(skillTest2.getName().equals(skillTest.getName()));
+        Skills skillTest3 = null;
+        Assertions.assertThrows(SkillException.class, () -> {
+            skillService.addSkills(skillTest3);
+        });
+
+    }
 
     @Test
     void deleteSkills() {

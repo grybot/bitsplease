@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,6 +72,30 @@ public class JobOfferServiceImpl implements JobOffersService {
                 .findById(jobOfferId)
                 .orElseThrow(() -> new JobOfferNotFoundException("This id is not associated with any job offer."));
         return true;
+    }
+    @Override
+    public List<JobOffer> getJobOffer(String companyName, String region, String dop, Integer skillId) {
+        if (companyName != null)
+            return jobOfferRepository.findByCompanyName(companyName);
+        if (region != null)
+            return jobOfferRepository.findByRegion(region);
+        if(dop != null)
+            return jobOfferRepository.findByDop(dop);
+        if (skillId != 0) {
+            List<JobOffer> jobOfferList = jobOfferRepository.findAll();
+            List<JobOffer> jobOffersListMatched = new ArrayList<>();
+            for (JobOffer jobOffer : jobOfferList) {
+                List<JobOfferSkills> jobOfferSkillsList = new ArrayList<>();
+                jobOfferSkillsList = jobOffer.getJobOfferSkills();
+                for (JobOfferSkills jobOfferSkillsListMatch : jobOfferSkillsList) {
+                    if (jobOfferSkillsListMatch.getSkills().getSkillsId() == skillId) {
+                        jobOffersListMatched.add(jobOffer);
+                    }
+                }
+            }
+            return jobOffersListMatched;
+        }
+        return jobOfferRepository.findAll();
     }
 
 }

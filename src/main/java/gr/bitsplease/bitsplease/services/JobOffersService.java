@@ -40,4 +40,7 @@ public interface JobOffersService {
     JobOfferSkills addSkillsToJobOffers(int jobOfferId, int skillId) throws JobOfferNotFoundException, SkillNotFoundException;
 
     boolean deleteJobOffer(int jobOfferId) throws JobOfferNotFoundException;
+
+    List<JobOffer> getJobOffer(String companyName,
+                               String region, String dop , Integer skillId);
 }

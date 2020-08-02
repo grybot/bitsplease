@@ -32,6 +32,7 @@ public class Applicant {
     @NotNull
     private String region;
     private boolean active = true;
+    private String dob;
 
 
 

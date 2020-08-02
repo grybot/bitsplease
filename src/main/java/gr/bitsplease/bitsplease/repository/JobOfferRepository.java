@@ -1,7 +1,7 @@
 package gr.bitsplease.bitsplease.repository;
 
 import gr.bitsplease.bitsplease.dto.ReportNotMatched;
-import gr.bitsplease.bitsplease.dto.Reporter;
+import gr.bitsplease.bitsplease.dto.OfferedRequestedReport;
 import gr.bitsplease.bitsplease.models.JobOffer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -36,11 +36,11 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Integer> {
      * @return list of the most requested skills from companies
      */
     @Query(nativeQuery =true, value=
-            " SELECT 		TOP(20)	 COUNT (skillsId) Freq , Skills.name Name " +
+            " SELECT 		TOP(20)	 COUNT (skillsId) Frequency , Skills.name Name " +
                     " FROM JobOfferSkills INNER JOIN Skills ON JobOfferSkills.skills_skillsId= Skills.skillsId" +
-                    " GROUP BY skills_skillsId,Skills.name ORDER BY Freq Desc")
+                    " GROUP BY skills_skillsId,Skills.name ORDER BY Frequency Desc")
 
-    List<Reporter> findRequested();
+    List<OfferedRequestedReport> findRequested();
 
     /**
      * Gets not matched skills of the applicants from the job offers.
@@ -56,5 +56,7 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Integer> {
                     " select skills_skillsId from ApplicantSkills)" )
 
     List<ReportNotMatched> getNotMatchedByApplicant();
+
+    List<JobOffer> findByDop(String dop);
 
 }

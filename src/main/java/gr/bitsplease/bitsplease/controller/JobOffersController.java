@@ -42,7 +42,7 @@ public class JobOffersController {
      * @return new job order
      */
     @PostMapping("JobOffer")
-    public JobOffer addJobOffer(@RequestBody JobOffer jobOffer) {
+    public JobOffer addJobOffer(@RequestBody JobOffer jobOffer) throws JobOfferNotFoundException {
         return jobOffersService.addJobOffer(jobOffer);
     }
 
@@ -65,11 +65,18 @@ public class JobOffersController {
      * Delete job offer.
      *
      * @param jobOfferId the job offer id
-     * @return boolean(true if job offer exists and successfully deleted, if false error will be thrown)
+     *
      * @throws JobOfferNotFoundException if job offer is not found by id
      */
     @DeleteMapping("JobOffer/{jobOfferId}")
     public boolean deleteJobOffer(@PathVariable int jobOfferId) throws JobOfferNotFoundException {
         return jobOffersService.deleteJobOffer(jobOfferId);
+    }
+
+    @GetMapping("jobOfferFiltered")
+    public List<JobOffer> getJobOffer(@RequestParam(required = false) String companyName
+            , @RequestParam(required = false) String region,
+                                      @RequestParam(required = false) String dop, @RequestParam(required = false) Integer skillId) {
+        return jobOffersService.getJobOffer(companyName, region, dop, skillId);
     }
 }

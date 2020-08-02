@@ -115,14 +115,20 @@ public class ApplicantServiceImpl implements ApplicantService {
         applicantSkillsRepository.save(applicantSkill);
         return applicantSkill;
     }
-
     @Override
-    public List<Applicant> getApplicant(String firstName, String region, Integer skillId) {
-        if (firstName != null)
+    public List<Applicant> getApplicant(String firstName, String region, String email, String address,
+                                        String dob, Integer skillId) {
+        if (firstName != null )
             return applicantRepository.findByFirstName(firstName);
-        if (region != null)
+        else if (region != null)
             return applicantRepository.findByRegion(region);
-        if (skillId != 0) {
+        else if (email != null && email.contains("@"))
+            return applicantRepository.findByEmail(email);
+        else if (address != null)
+            return applicantRepository.findByAddress(address);
+        else if (dob != null)
+            return applicantRepository.findByDob(dob);
+        else if (skillId != 0) {
             List<Applicant> applicantList = applicantRepository.findAll();
             List<Applicant> applicantListMatched = new ArrayList<>();
             for (Applicant applicant : applicantList) {
@@ -137,7 +143,6 @@ public class ApplicantServiceImpl implements ApplicantService {
             return applicantListMatched;
         }
         return applicantRepository.findAll();
-
     }
 
 

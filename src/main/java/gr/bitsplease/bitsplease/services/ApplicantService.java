@@ -65,6 +65,6 @@ public interface ApplicantService {
             throws ApplicantNotFoundException, SkillNotFoundException;
 
     List<Applicant> getApplicant(String firstName,
-                                 String region, Integer skillId);
+                                 String region, String email, String address, String dob, Integer skillId);
 
 }

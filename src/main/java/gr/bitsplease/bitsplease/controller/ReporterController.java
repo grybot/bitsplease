@@ -1,7 +1,6 @@
 package gr.bitsplease.bitsplease.controller;
 
-import gr.bitsplease.bitsplease.dto.ReportNotMatched;
-import gr.bitsplease.bitsplease.dto.Reporter;
+import gr.bitsplease.bitsplease.dto.*;
 import gr.bitsplease.bitsplease.services.ReporterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * The type Reporter controller.
+ * The type OfferedRequestedReport controller.
  */
 @RestController
 public class ReporterController {
     /**
-     * The Reporter service.
+     * The OfferedRequestedReport service.
      */
     @Autowired
     ReporterServiceImpl reporterServiceImpl;
@@ -26,7 +25,7 @@ public class ReporterController {
      * @return most offered skills from applicants
      */
     @GetMapping("mostOffered")
-    public List<Reporter> getOffered() {
+    public List<OfferedRequestedReport> getOffered() {
         return reporterServiceImpl.getOffered();
     }
 
@@ -36,7 +35,7 @@ public class ReporterController {
      * @return the most requested skills from job offers
      */
     @GetMapping("mostRequested")
-    public List<Reporter> getRequested() {
+    public List<OfferedRequestedReport> getRequested() {
         return reporterServiceImpl.getRequested();
     }
 
@@ -48,6 +47,35 @@ public class ReporterController {
     @GetMapping("NotMatchedByApplicant")
     public List<ReportNotMatched> notMatchedByApplicant() {
         return reporterServiceImpl.getNotMatchedByApplicants();
+    }
+
+    /**
+     * Gets 20 recent finalised matches
+     *
+     * @return list of the 20 most recent finalised matches
+     */
+    @GetMapping("Finalised")
+    public List<FinalisedMatches> getFinalisedMatches() {
+        return reporterServiceImpl.getFinalisedMatches();
+    }
+    /**
+     * Gets finalised matches for monthly report
+     *
+     * @return list of finalised matches based on month of finalisedDate for monthly report
+     */
+    @GetMapping("FinalisedByMonth")
+    public List<MatchByMonth> getFinalisedByMonth() {
+        return reporterServiceImpl.getFinalisedByMonth();
+    }
+    /**
+     * Gets finalised matches for weekly report
+     *
+     * @return list of finalised matches based on week of finalisedDate for weekly report
+     */
+    @GetMapping("FinalisedByWeek")
+    public List<MatchByWeek> getFinalisedByWeek(
+    ) {
+        return reporterServiceImpl.getFinalisedByWeek();
     }
 }
 

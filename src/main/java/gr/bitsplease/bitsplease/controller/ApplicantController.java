@@ -93,4 +93,10 @@ public class ApplicantController {
                                                 @PathVariable int skillId) throws ApplicantNotFoundException, SkillNotFoundException {
         return applicantService.addSkillsToApplicant(applicantId, skillId);
     }
+    @GetMapping("applicantFiltered")
+    public List<Applicant> getApplicant(@RequestParam(required = false) String firstName
+            , @RequestParam(required = false) String region, @RequestParam(required = false) String email
+            , @RequestParam(required = false) String address, @RequestParam(required = false) String dob, @RequestParam(required = false) Integer skillId) {
+        return applicantService.getApplicant(firstName, region, email, address, dob, skillId);
+    }
 }

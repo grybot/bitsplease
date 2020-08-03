@@ -1,9 +1,9 @@
 package gr.bitsplease.bitsplease.services;
 
-import gr.bitsplease.bitsplease.dto.ReportNotMatched;
-import gr.bitsplease.bitsplease.dto.Reporter;
+import gr.bitsplease.bitsplease.dto.*;
 import gr.bitsplease.bitsplease.repository.ApplicantRepository;
 import gr.bitsplease.bitsplease.repository.JobOfferRepository;
+import gr.bitsplease.bitsplease.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +15,18 @@ public class ReporterServiceImpl implements ReporterService {
     private ApplicantRepository applicantRepository;
     @Autowired
     private JobOfferRepository jobOfferRepository;
+    @Autowired
+    private MatchRepository matchRepository;
     @Override
-    public List<Reporter> getOffered() {
+    public List<OfferedRequestedReport> getOffered() {
 
-        List<Reporter> list;
+        List<OfferedRequestedReport> list;
         return list = applicantRepository.findOffered();
     }
 
     @Override
-    public List<Reporter> getRequested() {
-        List<Reporter> list;
+    public List<OfferedRequestedReport> getRequested() {
+        List<OfferedRequestedReport> list;
         return list =jobOfferRepository.findRequested();
     }
 
@@ -33,4 +35,26 @@ public class ReporterServiceImpl implements ReporterService {
         List<ReportNotMatched> list;
         return list =jobOfferRepository.getNotMatchedByApplicant();
     }
+    @Override
+    public List<MatchedReport> getMatchedReport() {
+        List<MatchedReport> list;
+        return list = matchRepository.getMatchedReport();
+    }
+    @Override
+    public List<FinalisedMatches> getFinalisedMatches() {
+        List<FinalisedMatches> list;
+        return list = matchRepository.getFinalisedMatches();
+    }
+    @Override
+    public List<MatchByMonth> getFinalisedByMonth() {
+        List<MatchByMonth> list;
+        return list = matchRepository.getFinalisedByMonth();
+    }
+    @Override
+    public List<MatchByWeek> getFinalisedByWeek() {
+        List<MatchByWeek> list;
+        return list = matchRepository.getFinalisedByWeek();
+    }
 }
+
+

@@ -1,7 +1,7 @@
 package gr.bitsplease.bitsplease.services;
 
-import gr.bitsplease.bitsplease.exceptions.JobOfferException;
-import gr.bitsplease.bitsplease.exceptions.SkillException;
+import gr.bitsplease.bitsplease.exceptions.JobOfferNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.SkillNotFoundException;
 import gr.bitsplease.bitsplease.models.JobOffer;
 import gr.bitsplease.bitsplease.models.JobOfferSkills;
 import gr.bitsplease.bitsplease.models.Skills;
@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,18 +33,20 @@ public class JobOfferServiceImpl implements JobOffersService {
     }
 
     @Override
-    public JobOffer addJobOffer(JobOffer jobOffer) {
+    public JobOffer addJobOffer(JobOffer jobOffer) throws JobOfferNotFoundException {
+        if (jobOffer == null)
+            throw new JobOfferNotFoundException("Null Job Offer");
         return jobOfferRepository.save(jobOffer);
     }
 
     @Override
-    public JobOfferSkills addSkillsToJobOffers(int jobOfferId, int skillId) throws JobOfferException, SkillException {
+    public JobOfferSkills addSkillsToJobOffers(int jobOfferId, int skillId) throws JobOfferNotFoundException, SkillNotFoundException {
         Skills skills = skillsRepository
                 .findById(skillId)
-                .orElseThrow(() -> new SkillException("Could not find any skill with this ID."));
+                .orElseThrow(() -> new SkillNotFoundException("Could not find any skill with this ID."));
         JobOffer jobOffer = jobOfferRepository
                 .findById(jobOfferId)
-                .orElseThrow(() -> new JobOfferException("Could not find any job offer with this ID."));
+                .orElseThrow(() -> new JobOfferNotFoundException("Could not find any job offer with this ID."));
         Optional<JobOfferSkills> jobOfferSkillsOptional = jobOfferSkillsRepository
                 .findAll()
                 .stream()
@@ -64,10 +67,35 @@ public class JobOfferServiceImpl implements JobOffersService {
     }
 
     @Override
-    public boolean deleteJobOffer(int jobOfferId) throws JobOfferException {
+    public boolean deleteJobOffer(int jobOfferId) throws JobOfferNotFoundException {
         JobOffer jobOffer = jobOfferRepository
                 .findById(jobOfferId)
-                .orElseThrow(() -> new JobOfferException("This id is not associated with any job offer."));
+                .orElseThrow(() -> new JobOfferNotFoundException("This id is not associated with any job offer."));
         return true;
     }
+    @Override
+    public List<JobOffer> getJobOffer(String companyName, String region, String dop, Integer skillId) {
+        if (companyName != null)
+            return jobOfferRepository.findByCompanyName(companyName);
+        if (region != null)
+            return jobOfferRepository.findByRegion(region);
+        if(dop != null)
+            return jobOfferRepository.findByDop(dop);
+        if (skillId != 0) {
+            List<JobOffer> jobOfferList = jobOfferRepository.findAll();
+            List<JobOffer> jobOffersListMatched = new ArrayList<>();
+            for (JobOffer jobOffer : jobOfferList) {
+                List<JobOfferSkills> jobOfferSkillsList = new ArrayList<>();
+                jobOfferSkillsList = jobOffer.getJobOfferSkills();
+                for (JobOfferSkills jobOfferSkillsListMatch : jobOfferSkillsList) {
+                    if (jobOfferSkillsListMatch.getSkills().getSkillsId() == skillId) {
+                        jobOffersListMatched.add(jobOffer);
+                    }
+                }
+            }
+            return jobOffersListMatched;
+        }
+        return jobOfferRepository.findAll();
+    }
+
 }

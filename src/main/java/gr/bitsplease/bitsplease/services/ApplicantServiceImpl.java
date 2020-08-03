@@ -1,8 +1,8 @@
 package gr.bitsplease.bitsplease.services;
 
 
-import gr.bitsplease.bitsplease.exceptions.ApplicantException;
-import gr.bitsplease.bitsplease.exceptions.SkillException;
+import gr.bitsplease.bitsplease.exceptions.ApplicantNotFoundException;
+import gr.bitsplease.bitsplease.exceptions.SkillNotFoundException;
 import gr.bitsplease.bitsplease.models.Applicant;
 import gr.bitsplease.bitsplease.models.ApplicantSkills;
 import gr.bitsplease.bitsplease.models.Skills;
@@ -40,38 +40,61 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public Applicant getApplicantById(int applicantId) throws ApplicantException {
+    public Applicant getApplicantById(int applicantId) throws ApplicantNotFoundException {
         Applicant applicant = applicantRepository
                 .findById(applicantId)
-                .orElseThrow(() -> new ApplicantException("Cannot find applicant with this ID."));
+                .orElseThrow(() -> new ApplicantNotFoundException("Cannot find applicant with this ID."));
         return applicant;
     }
 
 
     @Override
-    public Applicant addApplicant(Applicant applicant) {
+    public Applicant addApplicant(Applicant applicant) throws ApplicantNotFoundException {
+        if (applicant == null)
+            throw new ApplicantNotFoundException("Null Applicant");
+        if (applicant.getEmail() == null || !applicant.getEmail().contains("@"))
+            throw new ApplicantNotFoundException("invalid applicant's email");
         return applicantRepository.save(applicant);
     }
 
+//    @Override
+//    public Applicant updateApplicant(int applicantId, String firstName, String lastName, boolean active, String level, String address, String region) throws ApplicantNotFoundException {
+//        Applicant applicantInDB = applicantRepository
+//                .findById(applicantId)
+//                .orElseThrow(() -> new ApplicantNotFoundException("Could not find any applicant with this ID."));
+//        applicantInDB.setFirstName(firstName);
+//        applicantInDB.setLastName(lastName);
+//        applicantInDB.setActive(active);
+//        applicantInDB.setAddress(address);
+//        applicantInDB.setRegion(region);
+//        applicantInDB.setLevel(level);
+//        applicantRepository.save(applicantInDB);
+//        return applicantInDB;
+//    }
+
     @Override
-    public Applicant updateApplicant(Applicant applicant, int applicantId) throws ApplicantException {
+    public Applicant updateApplicant(int applicantId, String firstName, String lastName, String email, boolean active, String level, String address, String region) throws ApplicantNotFoundException {
         Applicant applicantInDB = applicantRepository
                 .findById(applicantId)
-                .orElseThrow(() -> new ApplicantException("Could not find any applicant with this ID."));
-        applicantInDB.setFirstName(applicant.getFirstName());
-        applicantInDB.setLastName(applicant.getLastName());
+                .orElseThrow(() -> new ApplicantNotFoundException("Could not find any applicant with this ID."));
+        if (firstName == null) applicantInDB.setFirstName(applicantInDB.getFirstName()); else applicantInDB.setFirstName(firstName);
+        if (lastName == null) applicantInDB.setLastName(applicantInDB.getLastName()); else applicantInDB.setLastName(lastName);
+        if (email == null) applicantInDB.setEmail(applicantInDB.getEmail()); else applicantInDB.setEmail(email);
+        if (address == null) applicantInDB.setAddress(applicantInDB.getAddress()); else applicantInDB.setAddress(address);
+        if (region == null) applicantInDB.setRegion(applicantInDB.getRegion()); else applicantInDB.setRegion(region);
+        if (active) applicantInDB.setActive(true); else applicantInDB.setActive(false);
         applicantRepository.save(applicantInDB);
         return applicantInDB;
     }
 
     @Override
-    public ApplicantSkills addSkillsToApplicant(int applicantId, int skillId) throws ApplicantException, SkillException {
+    public ApplicantSkills addSkillsToApplicant(int applicantId, int skillId) throws ApplicantNotFoundException, SkillNotFoundException {
         Skills skills = skillsRepository
                 .findById(skillId)
-                .orElseThrow(() -> new SkillException("Could not find any skill with this ID. "));
+                .orElseThrow(() -> new SkillNotFoundException("Could not find any skill with this ID."));
         Applicant applicant = applicantRepository
                 .findById(applicantId)
-                .orElseThrow(() -> new ApplicantException("Could not find any applicant with this ID."));
+                .orElseThrow(() -> new ApplicantNotFoundException("Could not find any applicant with this ID."));
         Optional<ApplicantSkills> applicantSkillsOptional = applicantSkillsRepository
                 .findAll()
                 .stream()
@@ -92,14 +115,20 @@ public class ApplicantServiceImpl implements ApplicantService {
         applicantSkillsRepository.save(applicantSkill);
         return applicantSkill;
     }
-
     @Override
-    public List<Applicant> getApplicant(String firstName, String region, Integer skillId) {
-        if (firstName != null)
+    public List<Applicant> getApplicant(String firstName, String region, String email, String address,
+                                        String dob, Integer skillId) {
+        if (firstName != null )
             return applicantRepository.findByFirstName(firstName);
-        if (region != null)
+        else if (region != null)
             return applicantRepository.findByRegion(region);
-        if (skillId != 0) {
+        else if (email != null && email.contains("@"))
+            return applicantRepository.findByEmail(email);
+        else if (address != null)
+            return applicantRepository.findByAddress(address);
+        else if (dob != null)
+            return applicantRepository.findByDob(dob);
+        else if (skillId != 0) {
             List<Applicant> applicantList = applicantRepository.findAll();
             List<Applicant> applicantListMatched = new ArrayList<>();
             for (Applicant applicant : applicantList) {
@@ -114,6 +143,7 @@ public class ApplicantServiceImpl implements ApplicantService {
             return applicantListMatched;
         }
         return applicantRepository.findAll();
-
     }
+
+
 }

@@ -23,6 +23,7 @@ public class JobOffer {
     private String edLevel;
     private String region;
     private boolean fulfilled = false;
+    private String dop;
 
     @OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL)
     @JsonIgnore

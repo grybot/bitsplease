@@ -163,6 +163,7 @@ public class MatchServiceImpl implements MatchService {
         JobOffer jobOffer = jobOfferOptional.get();
         match.setApplicant(applicant);
         match.setJobOffer(jobOffer);
+        match.setStatus("Proposed");
         match.setPercentage(partialPercentage(matches, requiredSkills));
         if (match.getPercentage()!=0)
         matchRepository.save(match);

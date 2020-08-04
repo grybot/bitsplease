@@ -51,19 +51,19 @@ public class GlobalExceptionHandler {
     /** Customize the response for ApplicantNotFoundException. */
     protected ResponseEntity<ApiError> handleApplicantNotFoundException(ApplicantNotFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> errors = Collections.singletonList(ex.getMessage());
-        return handleExceptionInternal(ex, new ApiError(errors), headers, status, request);
+        return handleExceptionInternal(ex, new ApiError(status, errors), headers, HttpStatus.BAD_REQUEST, request);
     }
     protected ResponseEntity<ApiError> handleJobOfferNotFoundException(JobOfferNotFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> errors = Collections.singletonList(ex.getMessage());
-        return handleExceptionInternal(ex, new ApiError(errors), headers, status, request);
+        return handleExceptionInternal(ex, new ApiError(status, errors), headers, status, request);
     }
     protected ResponseEntity<ApiError> handleMatchNotFoundException(MatchNotFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> errors = Collections.singletonList(ex.getMessage());
-        return handleExceptionInternal(ex, new ApiError(errors), headers, status, request);
+        return handleExceptionInternal(ex, new ApiError(status, errors), headers, status, request);
     }
     protected ResponseEntity<ApiError> handleSkillNotFoundException(SkillNotFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> errors = Collections.singletonList(ex.getMessage());
-        return handleExceptionInternal(ex, new ApiError(errors), headers, status, request);
+        return handleExceptionInternal(ex, new ApiError(status, errors), headers, status, request);
     }
     /** A single place to customize the response body of all Exception types. */
     protected ResponseEntity<ApiError> handleExceptionInternal(Exception ex, ApiError body, HttpHeaders headers, HttpStatus status, WebRequest request) {

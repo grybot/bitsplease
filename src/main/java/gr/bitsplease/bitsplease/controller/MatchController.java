@@ -29,16 +29,16 @@ public class MatchController {
     @Autowired
     private MatchService matchService;
 
-
-    /**
-     * Matching list.
-     *
-     * @return list of all matches
-     */
-    @GetMapping("matcher")
-    public List<SurveyAnswerStatistics> matching() {
-        return matchService.getMatches();
-    }
+//
+//    /**
+//     * Matching list.
+//     *
+//     * @return list of all matches
+//     */
+//    @GetMapping("matcher")
+//    public List<SurveyAnswerStatistics> matching() {
+//        return matchService.getMatches();
+//    }
 
 
     /**
@@ -66,6 +66,7 @@ public class MatchController {
     @GetMapping("match/{matchId}")
     public Match getMatchById(@PathVariable UUID matchId) throws MatchNotFoundException {
         return matchService.getMatchById(matchId);
+
     }
 
     /**

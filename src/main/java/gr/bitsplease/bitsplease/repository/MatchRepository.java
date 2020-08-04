@@ -40,7 +40,8 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
     @Query(nativeQuery = true, value =
             " SELECT TOP (20) applicant_ApplicantId ApplicantId ,jobOffer_jobOfferId JobOfferId, Match.finalisedDate FinalisedDate" +
                     " From " + " Match " +
-                    " Where status is not null Order By Match.finalisedDate ")
+                    " Where status ='finalised' " +
+                    " Order By Match.finalisedDate ")
     List<FinalisedMatches> getFinalisedMatches();
     /**
      * Query to fetch finalised matches for monthly report.
